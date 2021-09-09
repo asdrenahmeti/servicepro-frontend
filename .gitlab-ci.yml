@@ -1,0 +1,34 @@
+# Using Node as our preset enviroment (includes npm as well)
+image: node:10.15.3
+
+# Cache node_modules in between jobs
+cache:
+  paths:
+  - node_modules/
+# All stages of our pipeline! Ordered!
+stages:
+- build
+- deploy
+
+# in between stages, a global npm install is executed
+before_script:
+ - npm install
+
+# compile for gitlab
+compile:
+  stage: build
+  script:
+   - npm run build:pages
+  artifacts:
+    paths:
+    - public
+
+# Git Lab Pages Deploy
+pages:
+  stage: deploy
+  script:
+    - echo 'Gitlab Pages Deployment'
+  artifacts:
+    paths:
+    - public
+  only: ['master']
