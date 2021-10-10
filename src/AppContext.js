@@ -4,6 +4,7 @@ import en from "i18n/en";
 import al from "i18n/al";
 export const AppContext = React.createContext({
   language: en,
+  test: ":asd",
   languageChange: () => {},
 });
 const styles = {};
@@ -12,9 +13,10 @@ class Page extends React.Component {
     super(props);
     this.state = {
       language: en,
+      test: "asdasd",
     };
   }
-  componentDidMount() {}
+  // componentDidMount() {}
   languageChange = (to) => {
     switch (to) {
       case "en":
@@ -25,13 +27,20 @@ class Page extends React.Component {
         break;
     }
   };
+  changeTest = () => {
+    this.setState({ test: "hamdi" });
+  };
   render() {
     let { children } = this.props;
-    let { quests, language, user, loadingMode } = this.state;
+    let { language, test } = this.state;
     return (
       <AppContext.Provider
         value={{
           language,
+          test,
+          changeTest: () => {
+            this.changeTest();
+          },
           languageChange: (to) => {
             this.languageChange(to);
           },

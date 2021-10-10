@@ -4,8 +4,9 @@ import history from "./history";
 import React from "react";
 import "App.css";
 import AppContext from "AppContext";
-import Test from "pages/Test";
-
+import Factory from "anatomy/Factory";
+import { ThemeProvider } from "@material-ui/core";
+import theme from "styles/theme";
 class App extends React.Component {
   constructor(props) {
     super(props);
@@ -14,9 +15,12 @@ class App extends React.Component {
     return (
       <AppContext>
         <Router history={history}>
-          <Switch>
-            <Route path="/" component={Test} />
-          </Switch>
+          <ThemeProvider theme={theme}>
+            <Switch>
+              <Route path="/:page" component={Factory} />
+              <Route path="/" component={Factory} />
+            </Switch>
+          </ThemeProvider>
         </Router>
       </AppContext>
     );

@@ -1,32 +1,5 @@
-/* @font-face 
-{
-  font-family: DkFrozen;
-  src: url('assets/fonts/DkFrozen.otf');
+* {
+  margin: 0;
+  padding: 50;
+  box-sizing: border-box;
 }
-
-@font-face 
-{
-  font-family: LforL;
-  src: url('assets/fonts/LettersFl.ttf');
-}
-
-@font-face 
-{
-  font-family: UniSans;
-  src: url('assets/fonts/UniSans.otf');
-}
-
-@font-face 
-{
-  font-family: UniSansL;
-  src: url('assets/fonts/UniSansL.ttf');
-}
-
-@font-face 
-{
-  font-family: UniSansR;
-  src: url('assets/fonts/UniSansR.ttf');
-}
- */
-
-
