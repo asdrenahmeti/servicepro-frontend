@@ -2,4 +2,20 @@
   margin: 0;
   padding: 50;
   box-sizing: border-box;
+  letter-spacing: -1px;
 }
+
+:root {
+  font-size: 10px;
+}
+
+@media screen and (max-width: 400px) {
+  :root {
+    font-size: 15px;
+  }
+}
+
+/* @font-face {
+  font-family: sans-serif,
+  src: url("assets/fonts/Inter")
+} */
