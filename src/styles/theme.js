@@ -31,6 +31,7 @@ const fontSizes = {
 
 const Theme = createMuiTheme({
  colors,
+ fonts,
   typography: {
     menu: {
       color: colors.secondary,
@@ -56,7 +57,6 @@ const Theme = createMuiTheme({
       fontSize: fontSizes.md,
       fontWeight: weight.regular
     },
-
     fontSizes: {...fontSizes}
 
 

@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import { makeStyles } from "@material-ui/core/styles";
-import theme from "../styles/theme";
-import { NoEncryption } from "@material-ui/icons";
+import classnames from "classnames";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -44,20 +43,19 @@ const useStyles = makeStyles((theme) => ({
 
 function Input(props) {
   const [value, setValue] = useState("");
-
-  const classes = useStyles(theme);
-
+  const classes = useStyles(props);
+  const mergedClasses = classnames(
+    classes.root,
+    props.styleType == "leftRounded" && classes.leftRounded,
+    props.styleType == "leftRounded" && classes.iconPadding
+  );
   return (
     <div className={classes.formControl}>
       <input
         type={props.type}
         placeholder={props.placeholder}
         value={value}
-        className={`${classes.root} ${
-          props.styleType == "leftRounded"
-            ? `${classes.leftRounded} ${classes.iconPadding}`
-            : ""
-        }`}
+        className={mergedClasses}
         onChange={(e) => setValue(e.target.value)}
       />
       {props.children}
