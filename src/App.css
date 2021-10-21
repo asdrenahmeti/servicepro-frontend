@@ -2,17 +2,15 @@
   margin: 0;
   padding: 50;
   box-sizing: border-box;
-  letter-spacing: -1px;
+  letter-spacing: 0px;
+}
+
+body {
+  overflow-x: hidden;
 }
 
 :root {
   font-size: 10px;
-}
-
-@media screen and (max-width: 400px) {
-  :root {
-    font-size: 15px;
-  }
 }
 
 /* @font-face {

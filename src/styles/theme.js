@@ -55,7 +55,9 @@ const Theme = createMuiTheme({
       color: colors.terciary,
       fontSize: fontSizes.md,
       fontWeight: weight.regular
-    }
+    },
+
+    fontSizes: {...fontSizes}
 
 
   }
