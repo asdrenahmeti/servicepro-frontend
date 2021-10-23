@@ -32,6 +32,7 @@ const fontSizes = {
 const Theme = createMuiTheme({
  colors,
  fonts,
+ fontSizes,
   typography: {
     menu: {
       color: colors.secondary,
@@ -45,21 +46,37 @@ const Theme = createMuiTheme({
       fontSize: fontSizes.sm,
       fontWeight: weight.regular,
     },
-
     sectionTitle: {
       color: colors.secondary,
       fontSize: fontSizes.xl,
       fontWeight: weight.bold,
     },
-
     description: {
       color: colors.terciary,
       fontSize: fontSizes.md,
       fontWeight: weight.regular
     },
+    cardTitle:(size)=>{
+      return {
+        fontFamily: fonts.inter,
+        fontSize:fontSizes[size],
+        fontWeight:"600",
+        color:colors.secondary,
+        letterSpacing: "-0.035em",
+        fontStyle: "normal"
+      }
+    },
+    cardData:(size)=>{
+      return {
+        fontFamily: fonts.openSans,
+        fontSize:fontSizes[size],
+        fontWeight:"400",
+        color:colors.terciary,
+        letterSpacing: "-0.035em",
+        fontStyle: "normal"
+      }
+    },
     fontSizes: {...fontSizes}
-
-
   }
 });
 

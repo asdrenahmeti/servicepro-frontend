@@ -44,17 +44,36 @@ const useStyles = makeStyles((theme) => ({
   },
   active:{
     background: theme.colors.primary,
+  },
+  xs:{
+    padding: "0.8rem 1.8rem",
+    fontSize:theme.fontSizes.xs
+  },
+  sm:{
+    padding: "0.8rem 1.8rem",
+    fontSize:theme.fontSizes.sm
+  },
+  md:{
+    padding: "1rem 2rem",
+    fontSize:theme.fontSizes.md
+  },
+  lg:{
+    padding: "1.2rem 2.2rem",
+    fontSize:theme.fontSizes.lg
   }
 }));
 function Button(props) {
-  const { children, variant,rightRounded,active, ...others } = props;
-  const classes = useStyles();
+  const { children, variant,rightRounded,active,size="xs", ...others } = props;
+  const classes = useStyles(props);
   const btnClasses = classnames(
     classes.root,
     variant == "normal" && classes.normal,
     variant == "outline" && classes.outline,
     variant == "group" && classes.group,
     rightRounded && classes.rightRounded,
+    size=="sm" && classes.sm,
+    size=="md" && classes.md,
+    size=="lg" && classes.lg,
     (variant=="group" && active) && classes.active
   );
   return <ButtonBase className={btnClasses}>{children}</ButtonBase>;
