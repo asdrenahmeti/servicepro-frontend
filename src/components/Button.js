@@ -46,7 +46,7 @@ const useStyles = makeStyles((theme) => ({
     background: theme.colors.primary,
   },
   xs:{
-    padding: "0.8rem 1.8rem",
+    padding: "0.6rem 1.6rem",
     fontSize:theme.fontSizes.xs
   },
   sm:{

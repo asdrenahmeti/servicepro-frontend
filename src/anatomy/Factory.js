@@ -2,7 +2,8 @@ import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import Page from "anatomy/Page";
 import Home from "pages/Home";
-
+import Login from "pages/Login";
+import Signup from "pages/Signup";
 const Factory = (props) => {
   const {
     match,
@@ -15,6 +16,18 @@ const Factory = (props) => {
       return (
         <Page>
           <Home />
+        </Page>
+      );
+    case "login":
+      return (
+        <Page noBar>
+          <Login />
+        </Page>
+      );
+    case "signup":
+      return (
+        <Page noBar>
+          <Signup />
         </Page>
       );
     default:
