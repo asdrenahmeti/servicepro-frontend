@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import Grid from "@material-ui/core/Grid";
 import logo from "assets/logo.svg";
@@ -9,6 +9,7 @@ import Button from "components/Button";
 import { MAX_FORM_WIDTH } from "Constants";
 import { useContext } from "react";
 import { AppContext } from "AppContext";
+
 const useStyles = makeStyles((theme) => ({
   root: {
     height: "100vh",
@@ -94,6 +95,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const Login = (props) => {
+
   const classes = useStyles(props);
   const context = useContext(AppContext);
   const {

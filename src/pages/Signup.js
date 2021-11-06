@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import Grid from "@material-ui/core/Grid";
 import logo from "assets/logo.svg";
@@ -47,6 +47,39 @@ const useStyles = makeStyles((theme) => ({
   inputCnt: {
     padding: "0rem 1.2rem",
   },
+  switchBtnV1: {
+    borderRadius: 40,
+    backgroundColor: theme.colors.secondary,
+    color: "white",
+    width: "70%",
+    "&:active": {
+      transform: "translateY(0px)",
+    },
+  },
+  switchBtnV2: {
+    borderRadius: 40,
+    backgroundColor: theme.colors.primary,
+    color: "white",
+    width: "70%",
+    "&:active": {
+      transform: "translateY(0px)",
+    },
+  },
+  switchBtnCl1: {
+    backgroundColor: theme.colors.primary,
+    borderRadius: 40,
+    margin: 16,
+    width: 120,
+  },
+
+  switchBtnCl2: {
+    backgroundColor: theme.colors.secondary,
+    borderRadius: 40,
+    margin: 16,
+    width: 120,
+    display: "flex",
+    justifyContent: "flex-end",
+  },
   logo: {
     width: "80%",
     margin: "0px 0px 4rem 0px",
@@ -86,6 +119,7 @@ const useStyles = makeStyles((theme) => ({
     marginTop: "1.8rem",
     marginBottom: "1.8rem",
   },
+
   "@media screen and (max-width: 800px)": {
     imgCnt: {
       display: "none",
@@ -98,13 +132,24 @@ const useStyles = makeStyles((theme) => ({
       padding: "10%",
     },
     inputCnt: {
-        padding: "0rem 0.2rem",
-      },
+      padding: "0rem 0.2rem",
+    },
   },
 }));
-
+const usrType = {
+  servicer: "servicer",
+  client: "client",
+};
 const Signup = (props) => {
   const classes = useStyles(props);
+  const [userType, setUserType] = useState(usrType.servicer);
+  const changeUserType = () => {
+    if (userType == usrType.servicer) {
+      setUserType(usrType.client);
+    } else {
+      setUserType(usrType.servicer);
+    }
+  };
   return (
     <Grid container justify="center" className={classes.root}>
       <Grid item lg={5} md={4} className={classes.imgCnt}></Grid>
@@ -125,29 +170,177 @@ const Signup = (props) => {
             <p className={classes.signIn}>Create your account below</p>
           </Grid>
         </Grid>
-        <Grid container>
-          <Grid item lg={6} md={6} sm={6} xs={12} className={classes.inputCnt}>
-            <Input classes={{ root: classes.rootInput }} placeholder="Email" />
+        {(userType == usrType.servicer && (
+          <div className={classes.switchBtnCl1}>
+            <Button
+              classes={{ root: classes.switchBtnV1 }}
+              onClick={changeUserType}
+            >
+              Servicer
+            </Button>
+          </div>
+        )) || (
+          <div className={classes.switchBtnCl2}>
+            <Button
+              classes={{ root: classes.switchBtnV2 }}
+              onClick={changeUserType}
+            >
+              Client
+            </Button>
+          </div>
+        )}
+        {(userType == usrType.servicer && (
+          <Grid container>
+            <Grid
+              item
+              lg={6}
+              md={6}
+              sm={6}
+              xs={12}
+              className={classes.inputCnt}
+            >
+              <Input
+                classes={{ root: classes.rootInput }}
+                placeholder="Person or company name"
+              />
+            </Grid>
+            <Grid
+              item
+              lg={6}
+              md={6}
+              sm={6}
+              xs={12}
+              className={classes.inputCnt}
+            >
+              <Input
+                classes={{ root: classes.rootInput }}
+                placeholder="Email adress"
+              />
+            </Grid>
+            <Grid
+              item
+              lg={6}
+              md={6}
+              sm={6}
+              xs={12}
+              className={classes.inputCnt}
+            >
+              <Input
+                classes={{ root: classes.rootInput }}
+                placeholder="Password"
+              />
+            </Grid>
+            <Grid
+              item
+              lg={6}
+              md={6}
+              sm={6}
+              xs={12}
+              className={classes.inputCnt}
+            >
+              <Input
+                classes={{ root: classes.rootInput }}
+                placeholder="Confirm password"
+              />
+            </Grid>
+            <Grid
+              item
+              lg={6}
+              md={6}
+              sm={6}
+              xs={12}
+              className={classes.inputCnt}
+            >
+              <Input
+                classes={{ root: classes.rootInput }}
+                placeholder="Phone number"
+              />
+            </Grid>
+            <Grid
+              item
+              lg={6}
+              md={6}
+              sm={6}
+              xs={12}
+              className={classes.inputCnt}
+            >
+              <Input
+                classes={{ root: classes.rootInput }}
+                placeholder="Address"
+              />
+            </Grid>
+            <Grid
+              item
+              lg={6}
+              md={6}
+              sm={6}
+              xs={12}
+              className={classes.inputCnt}
+            >
+              <Input
+                classes={{ root: classes.rootInput }}
+                placeholder="Select up three services"
+                type="select"
+              />
+            </Grid>
           </Grid>
-          <Grid item lg={6} md={6} sm={6} xs={12} className={classes.inputCnt}>
-            <Input classes={{ root: classes.rootInput }} placeholder="Email" />
+        )) || (
+          <Grid container>
+            <Grid
+              item
+              lg={6}
+              md={6}
+              sm={6}
+              xs={12}
+              className={classes.inputCnt}
+            >
+              <Input
+                classes={{ root: classes.rootInput }}
+                placeholder="Person or company name"
+              />
+            </Grid>
+            <Grid
+              item
+              lg={6}
+              md={6}
+              sm={6}
+              xs={12}
+              className={classes.inputCnt}
+            >
+              <Input
+                classes={{ root: classes.rootInput }}
+                placeholder="Email adress"
+              />
+            </Grid>
+            <Grid
+              item
+              lg={6}
+              md={6}
+              sm={6}
+              xs={12}
+              className={classes.inputCnt}
+            >
+              <Input
+                classes={{ root: classes.rootInput }}
+                placeholder="Password"
+              />
+            </Grid>
+            <Grid
+              item
+              lg={6}
+              md={6}
+              sm={6}
+              xs={12}
+              className={classes.inputCnt}
+            >
+              <Input
+                classes={{ root: classes.rootInput }}
+                placeholder="Confirm password"
+              />
+            </Grid>
           </Grid>
-          <Grid item lg={6} md={6} sm={6} xs={12} className={classes.inputCnt}>
-            <Input classes={{ root: classes.rootInput }} placeholder="Email" />
-          </Grid>
-          <Grid item lg={6} md={6} sm={6} xs={12} className={classes.inputCnt}>
-            <Input classes={{ root: classes.rootInput }} placeholder="Email" />
-          </Grid>
-          <Grid item lg={6} md={6} sm={6} xs={12} className={classes.inputCnt}>
-            <Input classes={{ root: classes.rootInput }} placeholder="Email" />
-          </Grid>
-          <Grid item lg={6} md={6} sm={6} xs={12} className={classes.inputCnt}>
-            <Input classes={{ root: classes.rootInput }} placeholder="Email" />
-          </Grid>
-          <Grid item lg={6} md={6} sm={6} xs={12} className={classes.inputCnt}>
-            <Input classes={{ root: classes.rootInput }} placeholder="Email" />
-          </Grid>
-        </Grid>
+        )}
+
         <Grid container>
           <Grid item lg={6} md={6} sm={6} xs={12} className={classes.inputCnt}>
             <Button

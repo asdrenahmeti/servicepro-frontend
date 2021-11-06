@@ -76,7 +76,7 @@ function Button(props) {
     size=="lg" && classes.lg,
     (variant=="group" && active) && classes.active
   );
-  return <ButtonBase className={btnClasses}>{children}</ButtonBase>;
+  return <ButtonBase className={btnClasses} {...others}>{children}</ButtonBase>;
 }
 
 export default Button;

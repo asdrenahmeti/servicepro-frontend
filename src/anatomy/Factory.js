@@ -4,6 +4,7 @@ import Page from "anatomy/Page";
 import Home from "pages/Home";
 import Login from "pages/Login";
 import Signup from "pages/Signup";
+import Terms from "pages/Terms";
 const Factory = (props) => {
   const {
     match,
@@ -28,6 +29,12 @@ const Factory = (props) => {
       return (
         <Page noBar>
           <Signup />
+        </Page>
+      );
+    case "terms":
+      return (
+        <Page>
+          <Terms />
         </Page>
       );
     default:
