@@ -1,5 +1,5 @@
 module.exports = {
-  language: "en",
+  language: "mk",
   login: {
     home_link1: "back to ",
     home_link2: "home",

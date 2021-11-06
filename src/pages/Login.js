@@ -6,11 +6,13 @@ import bg from "assets/bg_imgs/login_bg.png";
 import { NavLink } from "react-router-dom";
 import Input from "components/Input";
 import Button from "components/Button";
-import {MAX_FORM_WIDTH} from "Constants"
+import { MAX_FORM_WIDTH } from "Constants";
+import { useContext } from "react";
+import { AppContext } from "AppContext";
 const useStyles = makeStyles((theme) => ({
   root: {
     height: "100vh",
-    maxWidth:MAX_FORM_WIDTH,
+    maxWidth: MAX_FORM_WIDTH,
     backgroundColor: "#F9F9F9",
   },
   imgCnt: {
@@ -69,60 +71,71 @@ const useStyles = makeStyles((theme) => ({
     margin: "1rem 0",
     fontWeight: "600",
     textDecoration: "none",
-    "& span":{
-        color:theme.colors.primary
-    }
+    "& span": {
+      color: theme.colors.primary,
+    },
   },
   rootInput: {
     width: "100%",
-    padding:"2.2rem",
+    padding: "2.2rem",
   },
   "@media screen and (max-width: 800px)": {
-    imgCnt:{
-        display:"none"
+    imgCnt: {
+      display: "none",
     },
-    linkCnt:{
-        top:20,
-        right:20
+    linkCnt: {
+      top: 20,
+      right: 20,
     },
     content: {
-        padding: "10%"
-      },
+      padding: "10%",
+    },
   },
 }));
 
 const Login = (props) => {
   const classes = useStyles(props);
+  const context = useContext(AppContext);
+  const {
+    language: { login },
+  } = context;
   return (
     <Grid container justify="center" className={classes.root}>
-      <Grid item lg={7} md={6}  className={classes.imgCnt}></Grid>
-      <Grid item lg={5} md={6}  sm={12} xs={12} className={classes.content}>
+      <Grid item lg={7} md={6} className={classes.imgCnt}></Grid>
+      <Grid item lg={5} md={6} sm={12} xs={12} className={classes.content}>
         <div className={classes.linkCnt}>
           <NavLink to="/home">
-            back to <span>home</span>
+            {login.home_link1}
+            <span>{login.home_link2}</span>
           </NavLink>
         </div>
         <img className={classes.logo} src={logo} />
         <h1 className={classes.welcome_back}>
-          Welcome back to <span>Service Pro</span>
+          {login.txt1} <span>{login.txt11}</span>
         </h1>
-        <p className={classes.signIn}>Sign in to your account below</p>
-        <Input classes={{ root: classes.rootInput }} placeholder="Email" />
-        <Input classes={{ root: classes.rootInput }} placeholder="Password" />
+        <p className={classes.signIn}>{login.txt2}</p>
+        <Input
+          classes={{ root: classes.rootInput }}
+          placeholder={login.in1_plc}
+        />
+        <Input
+          classes={{ root: classes.rootInput }}
+          placeholder={login.in2_plc}
+        />
         <NavLink to="/" className={classes.forgotPass}>
-          Forgot password?
+          {login.txt3}
         </NavLink>
         <Button variant="normal" size="md">
-          Sign in
+          {login.bnt1}
         </Button>
         <p style={{ textAlign: "center" }} className={classes.forgotPass}>
-          or
+          {login.txt4}
         </p>
         <Button variant="normal" size="md">
-          Sign in
+          {login.btn2}
         </Button>
         <NavLink to="/" className={classes.forgotPass}>
-          Don’t have an account? <span>Register</span>
+          {login.txt5} <span>{login.txt55}</span>
         </NavLink>
       </Grid>
     </Grid>

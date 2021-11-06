@@ -25,10 +25,14 @@ class Page extends React.Component {
       case "al":
         this.setState({ language: al });
         break;
+      case "mk":
+        this.setState({ language: mk });
+        break;
     }
   };
   changeTest = () => {
     this.setState({ test: "hamdi" });
+    
   };
   render() {
     let { children } = this.props;
