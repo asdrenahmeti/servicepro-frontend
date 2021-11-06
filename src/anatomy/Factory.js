@@ -5,6 +5,9 @@ import Home from "pages/Home";
 import Login from "pages/Login";
 import Signup from "pages/Signup";
 import Terms from "pages/Terms";
+import HowItWorks from "pages/HowItWorks";
+import Contact from "pages/Contact";
+
 const Factory = (props) => {
   const {
     match,
@@ -15,7 +18,7 @@ const Factory = (props) => {
   switch (page) {
     case "home":
       return (
-        <Page>
+        <Page footer>
           <Home />
         </Page>
       );
@@ -33,8 +36,20 @@ const Factory = (props) => {
       );
     case "terms":
       return (
-        <Page>
+        <Page footer>
           <Terms />
+        </Page>
+      );
+    case "howitworks":
+      return (
+        <Page footer>
+          <HowItWorks />
+        </Page>
+      );
+    case "contact":
+      return (
+        <Page footer>
+          <Contact />
         </Page>
       );
     default:

@@ -1,22 +1,21 @@
 import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
+import Footer from "anatomy/Footer";
 const useStyles = makeStyles(() => ({
   root: {
     flex: 1,
     height: "100%",
     overflowY: "auto",
-    width:"100%",
-    display:"flex",
-    justifyContent:"center"
   },
 }));
 
 const Content = (props) => {
   const classes = useStyles();
-  const {children}=props
+  const { children } = props;
   return (
-    <div className={classes.root} >
-        {children}
+    <div className={classes.root}>
+      {children}
+      {props.footer && <Footer />}
     </div>
   );
 };

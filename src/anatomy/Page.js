@@ -9,9 +9,9 @@ const useStyles = makeStyles((theme) => ({
     display: "flex",
     height: "100vh",
     flexDirection: "column",
-    width:"100%",
+    width: "100%",
     backgroundColor: theme.palette.leadColor,
-  }
+  },
 }));
 
 const Page = (props) => {
@@ -20,7 +20,7 @@ const Page = (props) => {
   return (
     <div className={classes.root} {...rest}>
       {!props.noBar && <NavBar />}
-      <Content>{props.children}</Content>
+      <Content footer={props.footer}>{props.children}</Content>
     </div>
   );
 };

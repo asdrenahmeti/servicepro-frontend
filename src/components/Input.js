@@ -4,9 +4,11 @@ import classnames from "classnames";
 
 const useStyles = makeStyles((theme) => ({
   root: {
+    fontSize: theme.fontSizes.xs,
+    width: "100%",
     color: theme.colors.secondary,
-    height: "4rem",
-    paddingLeft: "1rem",
+    height: "5rem",
+    paddingLeft: "2.5rem",
     borderRadius: "0.8rem",
     border: "0.1rem solid rgba(97, 100, 101, 0.1)",
     "&:focus": {
