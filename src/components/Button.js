@@ -7,14 +7,14 @@ const useStyles = makeStyles((theme) => ({
     textAlign: "center",
     fontFamily: theme.fonts.inter,
     padding: "1rem 2rem",
-    fontSize:"1.5rem",
-    fontWeight:"500",
+    fontSize: "1.5rem",
+    fontWeight: "500",
     borderRadius: "0.8rem",
     color: "white",
-    boxShadow:"0px 0px 3px grey",
+    boxShadow: "0 2px 4px rgba(0,0, 0, 0.1)",
     "&:active": {
-        transform: "translateY(1.5px)",
-      },
+      transform: "translateY(1.5px)",
+    },
   },
   normal: {
     background: theme.colors.primary,
@@ -25,13 +25,13 @@ const useStyles = makeStyles((theme) => ({
   },
   group: {
     background: theme.colors.primaryTint,
-    boxShadow:"none",
+    boxShadow: "none",
     "&:hover": {
       background: theme.colors.primary,
     },
   },
   outline: {
-    border: "solid #F5961F 0.2rem",
+    border: "solid #F5961F 0.3rem",
     background: "white",
     color: theme.colors.primary,
     "&:hover": {
@@ -39,31 +39,38 @@ const useStyles = makeStyles((theme) => ({
       color: "white",
     },
   },
-  rightRounded:{
+  rightRounded: {
     borderRadius: "0rem 0.8rem 0.8rem 0rem",
   },
-  active:{
+  active: {
     background: theme.colors.primary,
   },
-  xs:{
+  xs: {
     padding: "0.6rem 1.6rem",
-    fontSize:theme.fontSizes.xs
+    fontSize: theme.fontSizes.xs,
   },
-  sm:{
+  sm: {
     padding: "0.8rem 1.8rem",
-    fontSize:theme.fontSizes.sm
+    fontSize: theme.fontSizes.sm,
   },
-  md:{
+  md: {
     padding: "1rem 2rem",
-    fontSize:theme.fontSizes.md
+    fontSize: theme.fontSizes.md,
   },
-  lg:{
+  lg: {
     padding: "1.2rem 2.2rem",
-    fontSize:theme.fontSizes.lg
-  }
+    fontSize: theme.fontSizes.lg,
+  },
 }));
 function Button(props) {
-  const { children, variant,rightRounded,active,size="xs", ...others } = props;
+  const {
+    children,
+    variant,
+    rightRounded,
+    active,
+    size = "xs",
+    ...others
+  } = props;
   const classes = useStyles(props);
   const btnClasses = classnames(
     classes.root,
@@ -71,12 +78,16 @@ function Button(props) {
     variant == "outline" && classes.outline,
     variant == "group" && classes.group,
     rightRounded && classes.rightRounded,
-    size=="sm" && classes.sm,
-    size=="md" && classes.md,
-    size=="lg" && classes.lg,
-    (variant=="group" && active) && classes.active
+    size == "sm" && classes.sm,
+    size == "md" && classes.md,
+    size == "lg" && classes.lg,
+    variant == "group" && active && classes.active
   );
-  return <ButtonBase className={btnClasses} {...others}>{children}</ButtonBase>;
+  return (
+    <ButtonBase className={btnClasses} {...others}>
+      {children}
+    </ButtonBase>
+  );
 }
 
 export default Button;

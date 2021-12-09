@@ -1,7 +1,7 @@
 import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import "App.css";
-import NavBar from "anatomy/NavBar";
+import NavBar from "anatomy/Nav";
 import Content from "anatomy/Content";
 
 const useStyles = makeStyles((theme) => ({
@@ -10,17 +10,18 @@ const useStyles = makeStyles((theme) => ({
     height: "100vh",
     flexDirection: "column",
     width: "100%",
-    backgroundColor: theme.palette.leadColor,
+    alignItems:"center"
+
   },
 }));
 
 const Page = (props) => {
   const classes = useStyles();
-  const { children, ...rest } = props;
+  const { children, nav_bar, footer, ...rest } = props;
   return (
-    <div className={classes.root} {...rest}>
-      {!props.noBar && <NavBar />}
-      <Content footer={props.footer}>{props.children}</Content>
+    <div className={classes.root}>
+      {nav_bar && <NavBar />}
+      <Content footer={footer}>{children}</Content>
     </div>
   );
 };

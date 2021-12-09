@@ -5,6 +5,7 @@ const colors = {
   primaryTint: "#F8B662",
   secondary: "#3B3B3B",
   terciary: "#616465",
+  light_bg:"#f9f9f9"
 };
 
 const weight = {
@@ -55,6 +56,7 @@ const Theme = createMuiTheme({
       color: colors.terciary,
       fontSize: fontSizes.md,
       fontWeight: weight.regular,
+      fontFamily:fonts.openSans
     },
     cardTitle: (size) => {
       return {

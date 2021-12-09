@@ -14,8 +14,6 @@ import GooglePlay from "assets/googleplay.png";
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    flex: 1,
-    overflowX: "hidden",
     backgroundColor: "#F9F9F9",
     padding: "2rem 5rem",
     "@media(max-width: 880px)": {

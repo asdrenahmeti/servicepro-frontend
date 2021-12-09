@@ -6,6 +6,8 @@ const useStyles = makeStyles(() => ({
     flex: 1,
     height: "100%",
     overflowY: "auto",
+    width:"100%",
+    maxWidth:1800,
   },
 }));
 

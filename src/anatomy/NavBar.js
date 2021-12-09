@@ -5,6 +5,7 @@ import { Link } from "react-router-dom";
 import theme from "../styles/theme";
 import MenuIcon from "@material-ui/icons/Menu";
 import CloseIcon from "@material-ui/icons/Close";
+import Button from "components/Button"
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -136,7 +137,7 @@ const NavBar = () => {
           </li>
         </ul>
 
-        <div className={classes.buttonContainer}>
+        <ul className={classes.navList} style={{justifyContent:"flex-end",alignItems:"center"}}>
           <li className={classes.navItems}>
             <Link className={classes.navLinks} to="/">
               Login
@@ -144,10 +145,10 @@ const NavBar = () => {
           </li>
           <li className={classes.navItems}>
             <Link className={classes.navLinks} to="/">
-              Register
+            <Button variant="normal">Register</Button>
             </Link>
           </li>
-        </div>
+        </ul>
       </div>
 
       {showToggle ? (

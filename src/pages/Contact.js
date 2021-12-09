@@ -10,11 +10,8 @@ import ContactImage from "./../assets/contact.svg";
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    flex: 1,
-    height: "100%",
-    overflowY: "auto",
     backgroundColor: "#F9F9F9",
-    padding: "0 5rem",
+    padding: "2rem 5rem",
   },
 
   textarea: {

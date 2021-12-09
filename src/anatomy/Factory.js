@@ -4,7 +4,7 @@ import Page from "anatomy/Page";
 import Home from "pages/Home";
 import Login from "pages/Login";
 import Signup from "pages/Signup";
-import Terms from "pages/Terms";
+import Terms from "pages/terms/Terms";
 import HowItWorks from "pages/HowItWorks";
 import Contact from "pages/Contact";
 
@@ -18,7 +18,7 @@ const Factory = (props) => {
   switch (page) {
     case "home":
       return (
-        <Page footer>
+        <Page footer nav_bar>
           <Home />
         </Page>
       );

@@ -46,13 +46,18 @@ const useStyles = makeStyles((theme) => ({
 function Input(props) {
   const [value, setValue] = useState("");
   const classes = useStyles(props);
+  const {
+    styleType,
+    children,
+    ...others
+  } = props;
   const mergedClasses = classnames(
     classes.root,
-    props.styleType == "leftRounded" && classes.leftRounded,
-    props.styleType == "leftRounded" && classes.iconPadding
+    styleType == "leftRounded" && classes.leftRounded,
+    styleType == "leftRounded" && classes.iconPadding
   );
   return (
-    <div className={classes.formControl}>
+    <div className={classes.formControl} {...others}>
       <input
         type={props.type}
         placeholder={props.placeholder}
@@ -60,7 +65,7 @@ function Input(props) {
         className={mergedClasses}
         onChange={(e) => setValue(e.target.value)}
       />
-      {props.children}
+      {children}
     </div>
   );
 }
