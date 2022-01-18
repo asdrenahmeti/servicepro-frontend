@@ -1,10 +1,12 @@
 import React, { useState } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import classnames from "classnames";
-import HomeWorkIcon from "@material-ui/icons/HomeWork";
+
+import HomeWorkIcon from "@material-ui/icons/Phone";
 import LocationOnIcon from "@material-ui/icons/LocationOn";
 import StarBorderIcon from "@material-ui/icons/StarBorder";
 import Button from "components/Button";
+import { NavLink } from "react-router-dom";
 const useStyles = makeStyles((theme) => ({
   root: {
     width: "100%",
@@ -43,9 +45,20 @@ const useStyles = makeStyles((theme) => ({
   btnCnt: {
     marginTop: "1rem",
   },
+  navLink:{
+    textDecoration:"none"
+  }
 }));
 function VerticalCard(props) {
-  const { children, title="Missing", name="missing", location="missing", reviews=0, img, ...others } = props;
+  const {
+    children,
+    title = "company name",
+    name = "044 444 444",
+    location = "missing",
+    reviews = 0,
+    img,
+    ...others
+  } = props;
   const classes = useStyles(props);
   return (
     <div className={classes.root}>
@@ -73,7 +86,9 @@ function VerticalCard(props) {
           <h2 className={classes.dataDescription}> ({reviews} reviews)</h2>
         </div>
         <div className={classes.btnCnt}>
-          <Button variant="normal"> See more </Button>
+          <NavLink to="/servicer_profile" className={classes.navLink}>
+            <Button variant="normal"> See more </Button>
+          </NavLink>
         </div>
       </div>
     </div>

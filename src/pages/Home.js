@@ -1,7 +1,6 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { makeStyles } from "@material-ui/core/styles";
-import Input from "../components/Input";
-import CloseIcon from "@material-ui/icons/LocationOn";
+import Input from "components/Input";
 import Button from "components/Button";
 import Grid from "@material-ui/core/Grid";
 import VerticalCard from "components/cards/VerticalCard";
@@ -10,7 +9,7 @@ import bg from "assets/bg_imgs/login_bg.png";
 import LocationOnIcon from "@material-ui/icons/LocationOn";
 import BuildIcon from "@material-ui/icons/Build";
 import { NavLink } from "react-router-dom";
-import { colors } from "@material-ui/core";
+import publicServices from "services/publicServices";
 const useStyles = makeStyles((theme) => ({
   root: {
     width: "100%",
@@ -41,7 +40,7 @@ const useStyles = makeStyles((theme) => ({
         color: theme.colors.primary,
       },
     },
-    padding: 50,
+    padding: "0px 80px",
     backgroundColor: "white",
     width: "100%",
     backgroundRepeat: "no-repeat",
@@ -53,7 +52,7 @@ const useStyles = makeStyles((theme) => ({
     minHeight: 500,
   },
   featured: {
-    padding: 50,
+    padding: "0px 80px",
   },
   featuredHeader: {
     display: "flex",
@@ -63,10 +62,9 @@ const useStyles = makeStyles((theme) => ({
   },
   featuredTitle: {
     ...theme.typography.sectionTitle,
+    margin: "32px 0px 24px 0px ",
   },
-  featuredContent: {
-    padding: "10px 0px 50px 0px",
-  },
+  featuredContent: {},
   featuredItem: {
     padding: "0px 8px 0px 8px",
   },
@@ -116,8 +114,78 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
+const _services = [
+  {
+    id: 1,
+    name: "Popular",
+    cmps: [
+      { id: 1, title: "company1", name: "04444444" },
+      { id: 2, title: "company1", name: "04444443" },
+      { id: 3, title: "company1", name: "04444442" },
+    ],
+  },
+  {
+    id: 2,
+    name: "Carpentry",
+    cmps: [
+      { id: 1, title: "company2", name: "04444444" },
+      { id: 2, title: "company2", name: "04444443" },
+      { id: 3, title: "company2", name: "04444442" },
+    ],
+  },
+  {
+    id: 3,
+    name: "Gardering",
+    cmps: [
+      { id: 1, title: "company3", name: "04444444" },
+      { id: 2, title: "company3", name: "04444443" },
+      { id: 3, title: "company3", name: "04444442" },
+    ],
+  },
+  {
+    id: 4,
+    name: "Computer Services",
+    cmps: [
+      { id: 1, title: "company4", name: "04444444" },
+      { id: 2, title: "company5", name: "04444443" },
+      { id: 3, title: "company7", name: "04444442" },
+    ],
+  },
+];
 const Home = (props) => {
   const classes = useStyles(props);
+  const [services, setservices] = useState(_services);
+  const [activeService, setactiveService] = useState(_services[0]);
+  useEffect(() => {
+    publicServices.getServices().then((res) => {
+      const services = res.data.map((item, index) => {
+        if (index == 0) {
+          item.isActive = true;
+        } else {
+          item.isActive = false;
+        }
+        return item;
+      });
+      setservices(services);
+      setactiveService([services[0]]);
+    });
+  }, []);
+  const setActieService = (id) => {
+    let activeitem = null;
+    const _services = services.map((item) => {
+      if (item.id == id) {
+        activeitem = item;
+        item.isActive = true;
+      } else {
+        item.isActive = false;
+      }
+      return item;
+    });
+    if (activeitem) {
+      setactiveService(activeitem);
+      setservices(_services);
+    }
+  };
   return (
     <div className={classes.root}>
       <div className={classes.jumbotron}>
@@ -159,69 +227,56 @@ const Home = (props) => {
         </div>
       </div>
       <Grid container className={classes.featured} justify="center">
-        <Grid
-          lg={12}
-          md={12}
-          sm={12}
-          xs={12}
-          className={classes.featuredHeader}
-        >
-          <h1 className={classes.featuredTitle}>Featured handymans</h1>
-          <NavLink to="/" className={classes.explore}>
-            Explore all
-          </NavLink>
-        </Grid>
         <Grid lg={12} md={12} sm={12} xs={12}>
+          <Grid
+            lg={12}
+            md={12}
+            sm={12}
+            xs={12}
+            className={classes.featuredHeader}
+          >
+            <h1 className={classes.featuredTitle}>Featured handymans</h1>
+            <NavLink to="/search" className={classes.explore}>
+              Explore all
+            </NavLink>
+          </Grid>
           <Grid container className={classes.featuredContent}>
             <Grid item lg={3}>
-              <Button
-                variant={"group"}
-                size="lg"
-                style={{ width: "90%", marginBottom: 10 }}
-                active={true}
-              >
-                Popular
-              </Button>
-              <Button
-                variant={"group"}
-                size="lg"
-                style={{ width: "90%", marginBottom: 10 }}
-              >
-                Carpentry
-              </Button>
-              <Button
-                variant={"group"}
-                size="lg"
-                style={{ width: "90%", marginBottom: 10 }}
-              >
-                Gardening
-              </Button>
-              <Button
-                variant={"group"}
-                size="lg"
-                style={{ width: "90%", marginBottom: 10 }}
-              >
-                Electricians
-              </Button>
-              <Button
-                variant={"group"}
-                size="lg"
-                style={{ width: "90%", marginBottom: 10 }}
-              >
-                Computer Service
-              </Button>
+              {services.map((item) => {
+                return (
+                  <Button
+                    variant={"group"}
+                    size="lg"
+                    style={{ width: "90%", marginBottom: 10 }}
+                    active={item.isActive}
+                    key={item.id}
+                    onClick={() => {
+                      setActieService(item.id);
+                    }}
+                  >
+                    {item.name}
+                  </Button>
+                );
+              })}
             </Grid>
             <Grid item lg={9}>
               <Grid container>
-                <Grid lg={4} className={classes.featuredItem}>
-                  <VerticalCard img={clean_img} />
-                </Grid>
-                <Grid lg={4} className={classes.featuredItem}>
-                  <VerticalCard img={clean_img} />
-                </Grid>
-                <Grid lg={4} className={classes.featuredItem}>
-                  <VerticalCard img={clean_img} />
-                </Grid>
+                {activeService &&
+                  activeService.cmps.map((item) => {
+                    return (
+                      <Grid
+                        key={item.id}
+                        lg={4}
+                        className={classes.featuredItem}
+                      >
+                        <VerticalCard
+                          img={clean_img}
+                          title={item.title}
+                          name={item.name}
+                        />
+                      </Grid>
+                    );
+                  })}
               </Grid>
             </Grid>
           </Grid>

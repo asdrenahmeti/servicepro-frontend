@@ -23,11 +23,29 @@ const termItems = [
     description:
       "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc in pharetra tellus. Pellentesque eu mattis lectus. Cras tincidunt luctus venenatis. In ac ornare augue. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Duis sollicitudin molestie commodo. Ut sagittis, purus et tempus congue, magna augue ultrices nisl, vel consequat leo massa a augue. Aenean a orci quis nunc lacinia pretium sed ac nunc. Proin tristique erat eget facilisis porttitor. Fusce sed velit vel nisi mollis pretium. Sed et eleifend ante, ut consequat purus",
   },
+  {
+    id: "3",
+    link: "Accepting the terms",
+    title: "Terms and conditions",
+    date: "Updated at April 2020",
+    subTitle: "Accepting the terms",
+    description:
+      "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc in pharetra tellus. Pellentesque eu mattis lectus. Cras tincidunt luctus venenatis. In ac ornare augue. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Duis sollicitudin molestie commodo. Ut sagittis, purus et tempus congue, magna augue ultrices nisl, vel consequat leo massa a augue. Aenean a orci quis nunc lacinia pretium sed ac nunc. Proin tristique erat eget facilisis porttitor. Fusce sed velit vel nisi mollis pretium. Sed et eleifend ante, ut consequat purus",
+  },
+  {
+    id: "4",
+    link: "Changes to terms",
+    title: "Changes to terms",
+    date: "Updated at April 2020",
+    subTitle: "Changes to terms",
+    description:
+      "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc in pharetra tellus. Pellentesque eu mattis lectus. Cras tincidunt luctus venenatis. In ac ornare augue. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Duis sollicitudin molestie commodo. Ut sagittis, purus et tempus congue, magna augue ultrices nisl, vel consequat leo massa a augue. Aenean a orci quis nunc lacinia pretium sed ac nunc. Proin tristique erat eget facilisis porttitor. Fusce sed velit vel nisi mollis pretium. Sed et eleifend ante, ut consequat purus",
+  },
 ];
 const useStyles = makeStyles((theme) => ({
   root: {
     width: "100%",
-    padding: "2rem 5rem",
+    padding: "24px 80px",
   },
   title: {
     ...theme.typography.sectionTitle,
@@ -45,7 +63,7 @@ const useStyles = makeStyles((theme) => ({
   },
   leftSide: {
     borderRadius: "15px 0 0 15px",
-    backgroundColor: theme.colors.primaryTint,
+    backgroundColor: theme.colors.secondary,
     padding: 20,
     display: "flex",
     justifyContent: "center",
@@ -63,12 +81,10 @@ const useStyles = makeStyles((theme) => ({
     color: "white",
     fontWeight: "500",
     cursor: "pointer",
-    "&:hover": {
-      color: "#3B3B3B",
-    },
+    paddingBottom:4
   },
   activeItem: {
-    color: "#3B3B3B",
+    borderBottom: "solid #F5961F 2px",
   },
 }));
 function Terms(props) {

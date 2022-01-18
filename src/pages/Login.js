@@ -9,6 +9,7 @@ import Button from "components/Button";
 import { MAX_FORM_WIDTH } from "Constants";
 import { useContext } from "react";
 import { AppContext } from "AppContext";
+import userServices from "services/userServices";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -32,6 +33,14 @@ const useStyles = makeStyles((theme) => ({
     position: "relative",
     padding: "6% 8%",
     backgroundColor: "#F9F9F9",
+  },
+  form: {
+    display: "flex",
+    flexDirection: "column",
+  },
+  errors: {
+    color: "red",
+    fontSize: 12,
   },
   linkCnt: {
     position: "absolute",
@@ -95,12 +104,59 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const Login = (props) => {
-
   const classes = useStyles(props);
   const context = useContext(AppContext);
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [errors, setErrors] = useState(null);
+
   const {
     language: { login },
+    registerUser,
   } = context;
+
+  const changePassword = (e) => {
+    setErrors("");
+    setPassword(e.target.value);
+  };
+  const changeEmail = (e) => {
+    setErrors("");
+    setEmail(e.target.value);
+  };
+  const validateInputs = () => {
+    var pattern = new RegExp(
+      /^(("[\w-\s]+")|([\w-]+(?:\.[\w-]+)*)|("[\w-\s]+")([\w-]+(?:\.[\w-]+)*))(@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$)|(@\[?((25[0-5]\.|2[0-4][0-9]\.|1[0-9]{2}\.|[0-9]{1,2}\.))((25[0-5]|2[0-4][0-9]|1[0-9]{2}|[0-9]{1,2})\.){2}(25[0-5]|2[0-4][0-9]|1[0-9]{2}|[0-9]{1,2})\]?$)/i
+    );
+    if (!pattern.test(email)) {
+      setErrors("Incorrect email format!");
+      return false;
+    }
+    if (password.length < 6) {
+      setErrors("Password must be at least 6 characters");
+      return false;
+    }
+    return true;
+  };
+  const onSubmit = (e) => {
+    e.preventDefault();
+    if (!validateInputs()) {
+      return;
+    }
+    let data = { email: email, password: password };
+    userServices
+      .login(data)
+      .then((user_data) => {
+        localStorage.setItem("sp_user", JSON.stringify(user_data.token));
+        const { history } = props;
+        history.push("/profile");
+        registerUser(user_data.user);
+      })
+      .catch((err) => {
+        console.log("error", err);
+        setErrors(err.message);
+      });
+  };
+
   return (
     <Grid container justify="center" className={classes.root}>
       <Grid item lg={7} md={6} className={classes.imgCnt}></Grid>
@@ -115,28 +171,39 @@ const Login = (props) => {
         <h1 className={classes.welcome_back}>
           {login.txt1} <span>{login.txt11}</span>
         </h1>
-        <p className={classes.signIn}>{login.txt2}</p>
-        <Input
-          classes={{ root: classes.rootInput }}
-          placeholder={login.in1_plc}
-        />
-        <Input
-          classes={{ root: classes.rootInput }}
-          placeholder={login.in2_plc}
-        />
-        <NavLink to="/" className={classes.forgotPass}>
-          {login.txt3}
-        </NavLink>
-        <Button variant="normal" size="md">
-          {login.bnt1}
-        </Button>
-        <p style={{ textAlign: "center" }} className={classes.forgotPass}>
-          {login.txt4}
-        </p>
-        <Button variant="normal" size="md">
-          {login.btn2}
-        </Button>
-        <NavLink to="/" className={classes.forgotPass}>
+        <form className={classes.form} onSubmit={onSubmit}>
+          <p className={classes.signIn}>{login.txt2}</p>
+          <span className={classes.errors}>{errors}</span>
+          <Input
+            classes={{ root: classes.rootInput }}
+            placeholder={login.in1_plc}
+            name="email"
+            type="text"
+            value={email}
+            onChange={changeEmail}
+          />
+          <Input
+            classes={{ root: classes.rootInput }}
+            placeholder={login.in2_plc}
+            name="password"
+            type="password"
+            value={password}
+            onChange={changePassword}
+          />
+          <NavLink to="/" className={classes.forgotPass}>
+            {login.txt3}
+          </NavLink>
+          <Button variant="normal" size="md" type="submit">
+            {login.bnt1}
+          </Button>
+          <p style={{ textAlign: "center" }} className={classes.forgotPass}>
+            {login.txt4}
+          </p>
+          <Button variant="normal" size="md">
+            {login.btn2}
+          </Button>
+        </form>
+        <NavLink to="/signup" className={classes.forgotPass}>
           {login.txt5} <span>{login.txt55}</span>
         </NavLink>
       </Grid>

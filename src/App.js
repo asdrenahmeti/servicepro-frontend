@@ -17,6 +17,7 @@ class App extends React.Component {
         <Router history={history}>
           <ThemeProvider theme={theme}>
             <Switch>
+              <Route path="/:page/:type" component={Factory} />
               <Route path="/:page" component={Factory} />
               <Route path="/" component={Factory} />
             </Switch>

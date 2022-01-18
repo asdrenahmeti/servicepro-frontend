@@ -15,7 +15,7 @@ import GooglePlay from "assets/googleplay.png";
 const useStyles = makeStyles((theme) => ({
   root: {
     backgroundColor: "#F9F9F9",
-    padding: "2rem 5rem",
+    padding: "20px 80px",
     "@media(max-width: 880px)": {
       padding: "0 1rem",
     },

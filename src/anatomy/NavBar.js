@@ -10,6 +10,7 @@ import Button from "components/Button"
 const useStyles = makeStyles((theme) => ({
   root: {
     display: "flex",
+    width:"100%",
     height: 70,
     justifyContent: "space-around",
     alignItems: "center",
@@ -96,6 +97,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
+
 const NavBar = () => {
   const [showToggle, setToggle] = useState(false);
 
@@ -116,22 +118,22 @@ const NavBar = () => {
       >
         <ul className={classes.navList}>
           <li className={classes.navItems}>
-            <Link className={classes.navLinks} to="/">
+            <Link className={classes.navLinks} to="/home">
               Home
             </Link>
           </li>
           <li className={classes.navItems}>
-            <Link className={classes.navLinks} to="/">
+            <Link className={classes.navLinks} to="/howitworks">
               How it works
             </Link>
           </li>
           <li className={classes.navItems}>
-            <Link className={classes.navLinks} to="/">
+            <Link className={classes.navLinks} to="/terms">
               Terms & Conditions
             </Link>
           </li>
           <li className={classes.navItems}>
-            <Link className={classes.navLinks} to="/">
+            <Link className={classes.navLinks} to="/contact">
               Contact
             </Link>
           </li>
@@ -139,12 +141,12 @@ const NavBar = () => {
 
         <ul className={classes.navList} style={{justifyContent:"flex-end",alignItems:"center"}}>
           <li className={classes.navItems}>
-            <Link className={classes.navLinks} to="/">
+            <Link className={classes.navLinks} to="/login">
               Login
             </Link>
           </li>
           <li className={classes.navItems}>
-            <Link className={classes.navLinks} to="/">
+            <Link className={classes.navLinks} to="/signup">
             <Button variant="normal">Register</Button>
             </Link>
           </li>

@@ -156,3 +156,13 @@ const Home = (props) => {
 };
 
 export default Home;
+
+
+
+//
+next po mesin 
+1. Settings ne profile,
+2.me ba per mobile krej faqet
+3.me ba login signup 
+4.me i marr data per user
+

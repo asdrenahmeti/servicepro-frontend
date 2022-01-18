@@ -7,11 +7,13 @@ import Signup from "pages/Signup";
 import Terms from "pages/terms/Terms";
 import HowItWorks from "pages/HowItWorks";
 import Contact from "pages/Contact";
+import Profile from "pages/profile/Profile";
+import ServicerProfile from "pages/ServicerProfile";
 
 const Factory = (props) => {
   const {
     match,
-    match: { params: { page = "" } = {} } = {},
+    match: { params: { page = "", type = null } = {} } = {},
     location,
     history,
   } = props;
@@ -25,35 +27,51 @@ const Factory = (props) => {
     case "login":
       return (
         <Page noBar>
-          <Login />
+          <Login history={history} />
         </Page>
       );
     case "signup":
       return (
         <Page noBar>
-          <Signup />
+          <Signup history={history}/>
         </Page>
       );
     case "terms":
       return (
-        <Page footer>
+        <Page footer nav_bar>
           <Terms />
         </Page>
       );
     case "howitworks":
       return (
-        <Page footer>
+        <Page footer nav_bar>
           <HowItWorks />
         </Page>
       );
     case "contact":
       return (
-        <Page footer>
+        <Page footer nav_bar>
           <Contact />
         </Page>
       );
+    case "profile":
+      return (
+        <Page footer nav_bar>
+          <Profile type={type} />
+        </Page>
+      );
+      case "servicer_profile":
+        return (
+          <Page footer nav_bar>
+            <ServicerProfile type={type} />
+          </Page>
+        );
     default:
-      return <h1>Not found</h1>;
+      return (
+        <Page footer nav_bar>
+          <Home />
+        </Page>
+      );
   }
 };
 

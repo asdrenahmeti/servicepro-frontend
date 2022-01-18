@@ -4,7 +4,6 @@ const BUILD_DIR = path.resolve(__dirname, "public");
 // const BUILD_DIR = path.resolve(__dirname, 'public/frontend')
 const APP_DIR = path.resolve(__dirname, "src");
 const webpack = require("webpack");
-
 const BUILD_ENV = process.env.NODE_ENV || "development";
 
 module.exports = {

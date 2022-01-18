@@ -5,7 +5,8 @@ const colors = {
   primaryTint: "#F8B662",
   secondary: "#3B3B3B",
   terciary: "#616465",
-  light_bg:"#f9f9f9"
+  light_bg:"#f9f9f9",
+  border_color:"#C4C4C4",
 };
 
 const weight = {
@@ -40,11 +41,11 @@ const Theme = createMuiTheme({
       fontFamily: fonts.inter,
       fontSize: fontSizes.sm,
     },
-
     placeholder: {
       color: colors.terciary,
       fontSize: fontSizes.sm,
       fontWeight: weight.regular,
+      fontFamily:fonts.openSans
     },
     sectionTitle: {
       color: colors.secondary,

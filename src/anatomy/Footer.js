@@ -9,6 +9,7 @@ import Instagram from "@material-ui/icons/Instagram";
 const useStyles = makeStyles((theme) => ({
   root: {
     display: "flex",
+    backgroundColor:"white",
     fontFamily: theme.fonts.openSans,
     justifyContent: "space-around",
     padding: "4rem 3rem 2rem 3rem",

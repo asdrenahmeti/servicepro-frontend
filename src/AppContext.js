@@ -4,8 +4,9 @@ import en from "i18n/en";
 import al from "i18n/al";
 export const AppContext = React.createContext({
   language: en,
-  test: ":asd",
   languageChange: () => {},
+  user:null,
+  registerUser: () => {},
 });
 const styles = {};
 class Page extends React.Component {
@@ -13,10 +14,15 @@ class Page extends React.Component {
     super(props);
     this.state = {
       language: en,
-      test: "asdasd",
+      user:null
     };
   }
-  // componentDidMount() {}
+  componentDidMount() {
+    let user=localStorage.getItem('sp_user')
+    if(user){
+      this.setState({user:user})
+    }
+  }
   languageChange = (to) => {
     switch (to) {
       case "en":
@@ -32,22 +38,24 @@ class Page extends React.Component {
   };
   changeTest = () => {
     this.setState({ test: "hamdi" });
-    
   };
+  registerUser=(user)=>{
+    this.setState({user:user})
+  }
   render() {
     let { children } = this.props;
-    let { language, test } = this.state;
+    let { language, user } = this.state;
     return (
       <AppContext.Provider
         value={{
           language,
-          test,
-          changeTest: () => {
-            this.changeTest();
-          },
           languageChange: (to) => {
             this.languageChange(to);
           },
+          user,
+          registerUser:(user)=>{
+            this.registerUser(user)
+          }
         }}
       >
         {children}

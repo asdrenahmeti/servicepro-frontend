@@ -11,8 +11,7 @@ const useStyles = makeStyles((theme) => ({
     flexDirection: "column",
     width: "100%",
     alignItems:"center"
-
-  },
+  }
 }));
 
 const Page = (props) => {

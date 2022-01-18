@@ -44,7 +44,6 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 function Input(props) {
-  const [value, setValue] = useState("");
   const classes = useStyles(props);
   const {
     styleType,
@@ -57,13 +56,12 @@ function Input(props) {
     styleType == "leftRounded" && classes.iconPadding
   );
   return (
-    <div className={classes.formControl} {...others}>
+    <div className={classes.formControl}>
       <input
-        type={props.type}
         placeholder={props.placeholder}
-        value={value}
         className={mergedClasses}
-        onChange={(e) => setValue(e.target.value)}
+        {...others}
+        
       />
       {children}
     </div>
