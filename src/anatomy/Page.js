@@ -10,7 +10,8 @@ const useStyles = makeStyles((theme) => ({
     height: "100vh",
     flexDirection: "column",
     width: "100%",
-    alignItems:"center"
+    alignItems:"center",
+    background:"#F9F9F9"
   }
 }));
 

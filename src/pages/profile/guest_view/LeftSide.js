@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import Grid from "@material-ui/core/Grid";
 import { useContext } from "react";
@@ -75,19 +75,15 @@ const useStyles = makeStyles((theme) => ({
 const LeftSide = (props) => {
   const classes = useStyles(props);
   const context = useContext(AppContext);
+  const {contactModal}=props
+
   const {
     language: { login },
   } = context;
-  const { addNewProject } = props;
   return (
     <div className={classes.root}>
       <div className={classes.imgCnt}>
         <img src={clean_img} />
-
-        <div style={{ fontSize: "1.8rem", color: "#F5961F" }}>
-          <span className={classes.editTxt}>Edit Profile</span>{" "}
-          <EditIcon fontSize="inherit" />
-        </div>
       </div>
       <h2 className={classes.user} style={{ textAlign: "center" }}>
         Michael Winchester
@@ -111,9 +107,8 @@ const LeftSide = (props) => {
       <div className={classes.stats}>
         <RateReviewIcon fontSize="inherit" /> <span>100 Reviews</span>
       </div>
-
-      <Button variant="normal" size="md" onClick={addNewProject}>
-        Start project
+      <Button variant="normal" size="md" onClick={contactModal}>
+        Contact me
       </Button>
     </div>
   );

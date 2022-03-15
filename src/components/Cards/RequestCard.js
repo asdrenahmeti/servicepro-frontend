@@ -56,6 +56,7 @@ const RequestCard = (props) => {
   const classes = useStyles(props);
   const { variant } = props;
   const context = useContext(AppContext);
+  const {acceptRequest,declineRequest,data}=props
   return (
     <Grid container className={classes.root}>
       <Grid item lg={4} md={4} className={classes.firstPart}>
@@ -71,7 +72,7 @@ const RequestCard = (props) => {
         </div>
         {variant == "pending" && (
           <div>
-            <Button variant="normal" size="xs" style={{ padding: "6px 8px" }}>
+            <Button variant="normal" size="xs" style={{ padding: "6px 8px" }} onClick={()=>{acceptRequest(data.id)}}>
               Confirm Request
             </Button>
           </div>
@@ -89,7 +90,7 @@ const RequestCard = (props) => {
         </div>
         {(variant == "pending" && (
           <div>
-            <Button variant="outline" size="xs" style={{ padding: "4px 8px" }}>
+            <Button variant="outline" size="xs" style={{ padding: "4px 8px" }} onClick={()=>declineRequest(data.id)}>
               Cancel Request
             </Button>
           </div>

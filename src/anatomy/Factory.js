@@ -7,8 +7,9 @@ import Signup from "pages/Signup";
 import Terms from "pages/terms/Terms";
 import HowItWorks from "pages/HowItWorks";
 import Contact from "pages/Contact";
-import Profile from "pages/profile/Profile";
-import ServicerProfile from "pages/ServicerProfile";
+import Projects from "pages/profile/Projects";
+import SProjects from "pages/profile/guest_view/Projects";
+import Search from "pages/Search";
 
 const Factory = (props) => {
   const {
@@ -33,7 +34,7 @@ const Factory = (props) => {
     case "signup":
       return (
         <Page noBar>
-          <Signup history={history}/>
+          <Signup history={history} />
         </Page>
       );
     case "terms":
@@ -56,16 +57,22 @@ const Factory = (props) => {
       );
     case "profile":
       return (
-        <Page footer nav_bar>
-          <Profile type={type} />
+        <Page nav_bar>
+          <Projects />
         </Page>
       );
-      case "servicer_profile":
-        return (
-          <Page footer nav_bar>
-            <ServicerProfile type={type} />
-          </Page>
-        );
+    case "search":
+      return (
+        <Page nav_bar>
+          <Search  />
+        </Page>
+      );
+    case "servicer":
+      return (
+        <Page  nav_bar>
+          <SProjects type={type} />
+        </Page>
+      );
     default:
       return (
         <Page footer nav_bar>

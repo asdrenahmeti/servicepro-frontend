@@ -8,7 +8,10 @@ const userServices = {
   getProjects,
   getRequests,
   getReviews,
-
+  addNewProject,
+  deleteProject,
+  acceptRequest,
+  declineRequest
 };
 const callApi = (url, options) => {
   console.log(`Calling API ${url} with options`, options);
@@ -69,25 +72,62 @@ function register(data) {
 function getProjects() {
   const requestOptions = {
     method: "GET",
-    headers: { "Content-Type": "application/json" },
+    // headers: { "Content-Type": "application/json" },
+    headers: auth_header(),
   };
-  return callApi("/getMyProjects", requestOptions);
+  return callApi("/user/getMyProjects", requestOptions);
 }
 function getRequests() {
   const requestOptions = {
     method: "GET",
-    headers: { "Content-Type": "application/json" },
+    headers: auth_header(),
   };
-  return callApi("/profile", requestOptions);
+  return callApi("/user/requestJobs/7b8ff50a-a58a-4b7e-98a4-f2a847d3e9ad", requestOptions);
 }
 function getReviews() {
   const requestOptions = {
     method: "GET",
-    headers: { "Content-Type": "application/json" },
+    headers: auth_header(),
   };
   return callApi("/profile", requestOptions);
 }
 function logout() {
   localStorage.removeItem("sp_user");
+}
+
+function addNewProject(data) {
+  let user = JSON.parse(localStorage.getItem("sp_user"));
+  const requestOptions = {
+    method: "POST",
+    headers: { Authorization: "Bearer " + user.token },
+    body: data,
+  };
+  return callApi("/user/addNewProject", requestOptions);
+}
+
+function deleteProject(id){
+  let user = JSON.parse(localStorage.getItem("sp_user"));
+  const requestOptions = {
+    method: "DELETE",
+    headers: { Authorization: "Bearer " + user.token },
+  };
+  return callApi("/user/post/"+id, requestOptions)
+}
+
+function acceptRequest(id){
+  let user = JSON.parse(localStorage.getItem("sp_user"));
+  const requestOptions = {
+    method: "PATCH",
+    headers: { Authorization: "Bearer " + user.token },
+  };
+  return callApi("/user/acceptJob/"+id, requestOptions)
+}
+function declineRequest(id){
+  let user = JSON.parse(localStorage.getItem("sp_user"));
+  const requestOptions = {
+    method: "PATCH",
+    headers: { Authorization: "Bearer " + user.token },
+  };
+  return callApi("/user/declineJob/"+id, requestOptions)
 }
 export default userServices;

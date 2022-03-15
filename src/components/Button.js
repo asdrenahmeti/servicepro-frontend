@@ -23,6 +23,9 @@ const useStyles = makeStyles((theme) => ({
       color: "white",
     },
   },
+  delete:{
+    background:"#FF3D00"
+  },
   group: {
     background: theme.colors.primaryTint,
     boxShadow: "none",
@@ -77,6 +80,7 @@ function Button(props) {
     variant == "normal" && classes.normal,
     variant == "outline" && classes.outline,
     variant == "group" && classes.group,
+    variant =="delete" && classes.delete,
     rightRounded && classes.rightRounded,
     size == "sm" && classes.sm,
     size == "md" && classes.md,

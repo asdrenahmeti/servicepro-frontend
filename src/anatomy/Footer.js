@@ -5,11 +5,13 @@ import { Link } from "react-router-dom";
 import TwitterIcon from "@material-ui/icons/Twitter";
 import Facebook from "@material-ui/icons/Facebook";
 import Instagram from "@material-ui/icons/Instagram";
+import { useContext } from "react";
+import { AppContext } from "AppContext";
 
 const useStyles = makeStyles((theme) => ({
   root: {
     display: "flex",
-    backgroundColor:"white",
+    backgroundColor: "white",
     fontFamily: theme.fonts.openSans,
     justifyContent: "space-around",
     padding: "4rem 3rem 2rem 3rem",
@@ -96,6 +98,10 @@ const useStyles = makeStyles((theme) => ({
 
 function Footer() {
   const classes = useStyles();
+  const context = useContext(AppContext);
+  const {
+    language: { footer },
+  } = context;
   return (
     <footer className={classes.root}>
       <div className={classes.column} style={{ justifyContent: "center" }}>
@@ -104,63 +110,63 @@ function Footer() {
           className={classes.footerItem}
           style={{ textAlign: "center", marginTop: "0.5rem" }}
         >
-          Let a professional <br /> handyman take over
+          {footer.p1.txt1} <br /> {footer.p1.txt2}
         </p>
       </div>
 
       <div className={classes.column}>
-        <h2 className={classes.title}>Get Started</h2>
+        <h2 className={classes.title}>{footer.p2.txt}</h2>
         <ul className={classes.footerList}>
           <Link to="/home" className={classes.footerItem}>
-            Home
+            {footer.p2.l1}
           </Link>
           <Link to="/login" className={classes.footerItem}>
-            Sign in
+            {footer.p2.l2}
           </Link>
           <Link to="/signup" className={classes.footerItem}>
-            Register
+            {footer.p2.l3}
           </Link>
         </ul>
       </div>
 
       <div className={classes.column}>
-        <h2 className={classes.title}>Learn More</h2>
+        <h2 className={classes.title}>{footer.p3.txt}</h2>
         <ul className={classes.footerList}>
           <Link to="/about" className={classes.footerItem}>
-            About Us
+            {footer.p3.l1}
           </Link>
           <Link to="/faq" className={classes.footerItem}>
-            FAQ
+            {footer.p3.l2}
           </Link>
         </ul>
       </div>
 
       <div className={classes.column}>
-        <h2 className={classes.title}>Legals</h2>
+        <h2 className={classes.title}>{footer.p4.txt}</h2>
         <ul className={classes.footerList}>
           <Link to="/pricacy" className={classes.footerItem}>
-            Privacy
+          {footer.p4.l1}
           </Link>
           <Link to="/faq" className={classes.footerItem}>
-            FAQs
+          {footer.p4.l2}
           </Link>
           <Link to="/terms" className={classes.footerItem}>
-            Terms & Conditions
+          {footer.p4.l3}
           </Link>
         </ul>
       </div>
 
       <div className={classes.column}>
-        <h2 className={classes.title}>General</h2>
+        <h2 className={classes.title}>{footer.p5.txt}</h2>
         <ul className={classes.footerList}>
           <Link to="/news" className={classes.footerItem}>
-            News
+          {footer.p5.l1}
           </Link>
           <Link to="/contact" className={classes.footerItem}>
-            Contact Us
+          {footer.p5.l2}
           </Link>
           <Link to="/terms" className={classes.footerItem}>
-            Terms & Conditions
+          {footer.p5.l3}
           </Link>
         </ul>
       </div>

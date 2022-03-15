@@ -57,6 +57,7 @@ function VerticalCard(props) {
     location = "missing",
     reviews = 0,
     img,
+    id,
     ...others
   } = props;
   const classes = useStyles(props);
@@ -86,7 +87,7 @@ function VerticalCard(props) {
           <h2 className={classes.dataDescription}> ({reviews} reviews)</h2>
         </div>
         <div className={classes.btnCnt}>
-          <NavLink to="/servicer_profile" className={classes.navLink}>
+          <NavLink to={"/servicer/"+id} className={classes.navLink}>
             <Button variant="normal"> See more </Button>
           </NavLink>
         </div>

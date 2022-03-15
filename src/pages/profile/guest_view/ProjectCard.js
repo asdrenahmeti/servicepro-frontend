@@ -97,23 +97,6 @@ const ProjectCard = (props) => {
               <p>company@gmail.com</p>
             </div>
           </div>
-          {/* <div>
-            {(mode == "guest" && (
-              <Button variant="normal" size="sm">
-                Contact
-              </Button>
-            )) || (
-              <Button
-                variant="normal"
-                size="sm"
-                onClick={() => {
-                  openEditProject(data.id);
-                }}
-              >
-                Edit
-              </Button>
-            )}
-          </div> */}
         </div>
         <div>
           <h2 className={classes.serviceType}>{data.title}</h2>

@@ -60,6 +60,7 @@ const useStyles = makeStyles((theme) => ({
     borderRadius: 15,
     width: "100%",
     marginBottom: 20,
+    minHeight:"50vh"
   },
   leftSide: {
     borderRadius: "15px 0 0 15px",

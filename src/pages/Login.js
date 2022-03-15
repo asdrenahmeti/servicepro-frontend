@@ -128,11 +128,11 @@ const Login = (props) => {
       /^(("[\w-\s]+")|([\w-]+(?:\.[\w-]+)*)|("[\w-\s]+")([\w-]+(?:\.[\w-]+)*))(@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$)|(@\[?((25[0-5]\.|2[0-4][0-9]\.|1[0-9]{2}\.|[0-9]{1,2}\.))((25[0-5]|2[0-4][0-9]|1[0-9]{2}|[0-9]{1,2})\.){2}(25[0-5]|2[0-4][0-9]|1[0-9]{2}|[0-9]{1,2})\]?$)/i
     );
     if (!pattern.test(email)) {
-      setErrors("Incorrect email format!");
+      setErrors(login.errors.email_format);
       return false;
     }
     if (password.length < 6) {
-      setErrors("Password must be at least 6 characters");
+      setErrors(login.errors.short_pass);
       return false;
     }
     return true;
@@ -146,14 +146,20 @@ const Login = (props) => {
     userServices
       .login(data)
       .then((user_data) => {
-        localStorage.setItem("sp_user", JSON.stringify(user_data.token));
+        let user = {
+          token: user_data.token,
+          email: user_data.user.email,
+          id: user_data.user.id,
+          username: user_data.user.username,
+        };
+        localStorage.setItem("sp_user", JSON.stringify(user));
         const { history } = props;
         history.push("/profile");
         registerUser(user_data.user);
       })
       .catch((err) => {
         console.log("error", err);
-        setErrors(err.message);
+        setErrors(login.errors.back_error);
       });
   };
 

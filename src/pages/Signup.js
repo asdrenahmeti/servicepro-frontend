@@ -10,6 +10,7 @@ import { MAX_FORM_WIDTH } from "Constants";
 import userServices from "services/userServices";
 import { useContext } from "react";
 import { AppContext } from "AppContext";
+import Select from "components/Select";
 const useStyles = makeStyles((theme) => ({
   root: {
     height: "100vh",
@@ -163,10 +164,10 @@ const Signup = (props) => {
   const [phone, setPhone] = useState("");
   const [address, setAddress] = useState("");
   const [errors, setErrors] = useState([]);
-
+  const [services, setServices] = useState([]);
   const context = useContext(AppContext);
   const {
-    language: { login },
+    language: { register },
     registerUser,
   } = context;
   const validateInputs = () => {
@@ -175,16 +176,16 @@ const Signup = (props) => {
       /^(("[\w-\s]+")|([\w-]+(?:\.[\w-]+)*)|("[\w-\s]+")([\w-]+(?:\.[\w-]+)*))(@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$)|(@\[?((25[0-5]\.|2[0-4][0-9]\.|1[0-9]{2}\.|[0-9]{1,2}\.))((25[0-5]|2[0-4][0-9]|1[0-9]{2}|[0-9]{1,2})\.){2}(25[0-5]|2[0-4][0-9]|1[0-9]{2}|[0-9]{1,2})\]?$)/i
     );
     if (!pattern.test(email)) {
-      _errors.push("Incorrect email format!");
+      _errors.push(register.errors.email);
     }
     if (password.length < 6) {
-      _errors.push("Password must be at least 6 characters!");
+      _errors.push(register.errors.shortPass);
     }
     if (name.length == 0) {
-      _errors.push("Name is required!");
+      _errors.push(register.errors.name);
     }
     if (password !== confirmPassword) {
-      _errors.push("Password and confirm password don't match");
+      _errors.push(register.errors.passNotMatch);
     }
     if (_errors.length > 0) {
       setErrors(_errors);
@@ -253,7 +254,9 @@ const Signup = (props) => {
     setErrors([]);
     setAddress(e.target.value);
   };
-
+  const onSelectChange = (e) => {
+    console.log("select event..:", e);
+  };
   const changeUserType = () => {
     if (userType == usrType.servicer) {
       setUserType(usrType.client);
@@ -261,14 +264,13 @@ const Signup = (props) => {
       setUserType(usrType.servicer);
     }
   };
-  console.log("errors..:", errors);
   return (
     <Grid container justify="center" className={classes.root}>
       <Grid item lg={5} md={4} className={classes.imgCnt}></Grid>
       <Grid item lg={7} md={8} sm={12} xs={12} className={classes.content}>
         <div className={classes.linkCnt}>
           <NavLink to="/home">
-            back to <span>home</span>
+            {register.home_link1} <span>{register.home_link2}</span>
           </NavLink>
         </div>
         <Grid container justify="center">
@@ -277,9 +279,10 @@ const Signup = (props) => {
           </Grid>
           <Grid item lg={8} md={10}>
             <h1 className={classes.welcome_back}>
-              Welcome to <span>Service Pro</span>
+              {register.title1}
+              <span>{register.title2}</span>
             </h1>
-            <p className={classes.signIn}>Create your account below</p>
+            <p className={classes.signIn}>{register.subTitle}</p>
           </Grid>
         </Grid>
         {(userType == usrType.servicer && (
@@ -288,7 +291,7 @@ const Signup = (props) => {
               classes={{ root: classes.switchBtnV1 }}
               onClick={changeUserType}
             >
-              Servicer
+              {register.switchBtn1}
             </Button>
           </div>
         )) || (
@@ -297,7 +300,7 @@ const Signup = (props) => {
               classes={{ root: classes.switchBtnV2 }}
               onClick={changeUserType}
             >
-              Client
+              {register.switchBtn2}
             </Button>
           </div>
         )}
@@ -325,7 +328,7 @@ const Signup = (props) => {
               >
                 <Input
                   classes={{ root: classes.rootInput }}
-                  placeholder="Person or company name"
+                  placeholder={register.inputPlcs.name}
                   name="name"
                   type="text"
                   value={name}
@@ -342,7 +345,7 @@ const Signup = (props) => {
               >
                 <Input
                   classes={{ root: classes.rootInput }}
-                  placeholder="Email address"
+                  placeholder={register.inputPlcs.email}
                   name="email"
                   type="text"
                   value={email}
@@ -359,7 +362,7 @@ const Signup = (props) => {
               >
                 <Input
                   classes={{ root: classes.rootInput }}
-                  placeholder="Password"
+                  placeholder={register.inputPlcs.password}
                   name="password"
                   type="password"
                   value={password}
@@ -376,7 +379,7 @@ const Signup = (props) => {
               >
                 <Input
                   classes={{ root: classes.rootInput }}
-                  placeholder="Confirm password"
+                  placeholder={register.inputPlcs.confirm_pass}
                   name="confirmPassword"
                   type="password"
                   value={confirmPassword}
@@ -393,7 +396,7 @@ const Signup = (props) => {
               >
                 <Input
                   classes={{ root: classes.rootInput }}
-                  placeholder="Phone number"
+                  placeholder={register.inputPlcs.phone}
                   name="phone"
                   type="text"
                   value={phone}
@@ -410,7 +413,7 @@ const Signup = (props) => {
               >
                 <Input
                   classes={{ root: classes.rootInput }}
-                  placeholder="Address"
+                  placeholder={register.inputPlcs.adress}
                   name="address"
                   type="text"
                   value={address}
@@ -425,11 +428,16 @@ const Signup = (props) => {
                 xs={12}
                 className={classes.inputCnt}
               >
-                <Input
-                  classes={{ root: classes.rootInput }}
-                  // placeholder="Select up three services"
-                  placeholder="Main service"
-                  type="select"
+                <Select
+                  placeholder={register.inputPlcs.services}
+                  isMulti={true}
+                  onSelectChange={onSelectChange}
+                  options={[
+                    { value: "1", label: "Carpentry" },
+                    { value: "2", label: "Gardering" },
+                    { value: "3", label: "Electronics" },
+                    { value: "4", label: "Computer services" },
+                  ]}
                 />
               </Grid>
             </Grid>
@@ -445,7 +453,7 @@ const Signup = (props) => {
               >
                 <Input
                   classes={{ root: classes.rootInput }}
-                  placeholder="Your name"
+                  placeholder={register.inputPlcs.c_name}
                   name="name"
                   type="text"
                   value={name}
@@ -462,7 +470,7 @@ const Signup = (props) => {
               >
                 <Input
                   classes={{ root: classes.rootInput }}
-                  placeholder="Email address"
+                  placeholder={register.inputPlcs.email}
                   name="email"
                   type="text"
                   value={email}
@@ -479,7 +487,7 @@ const Signup = (props) => {
               >
                 <Input
                   classes={{ root: classes.rootInput }}
-                  placeholder="Password"
+                  placeholder={register.inputPlcs.password}
                   name="password"
                   type="password"
                   value={password}
@@ -496,7 +504,7 @@ const Signup = (props) => {
               >
                 <Input
                   classes={{ root: classes.rootInput }}
-                  placeholder="Confirm password"
+                  placeholder={register.inputPlcs.confirm_pass}
                   name="confirmPassword"
                   type="password"
                   value={confirmPassword}
@@ -521,7 +529,7 @@ const Signup = (props) => {
                 size="md"
                 type="submit"
               >
-                Sign up
+                {register.signupBtn}
               </Button>
             </Grid>
             <Grid
@@ -537,13 +545,13 @@ const Signup = (props) => {
                 variant="normal"
                 size="md"
               >
-                Continue with google
+                {register.googleSignup}
               </Button>
             </Grid>
           </Grid>
         </form>
         <NavLink to="/login" className={classes.forgotPass}>
-          Have an account? <span>Login</span>
+          {register.haveAcc1} <span>{register.loginTxt}</span>
         </NavLink>
       </Grid>
     </Grid>
