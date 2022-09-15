@@ -15,7 +15,9 @@ import ConfirmModal from "components/modals/ConfirmModal";
 import userServices from "services/userServices";
 import { NavLink } from "react-router-dom";
 import SentimentVeryDissatisfiedIcon from "@material-ui/icons/SentimentVeryDissatisfied";
-import KeyboardBackspaceIcon from '@material-ui/icons/KeyboardBackspace';
+import KeyboardBackspaceIcon from "@material-ui/icons/KeyboardBackspace";
+import { IMAGES_URL } from "Constants";
+import deafult_img from "assets/default.jpg";
 const useStyles = makeStyles((theme) => ({
   root: {
     width: "100%",
@@ -30,17 +32,19 @@ const useStyles = makeStyles((theme) => ({
     height: "100%",
     width: "100%",
     objectFit: "cover",
+    border:"solid grey 1px",
   },
   smImgCnt: {
-    padding: "0px 5px",
+    padding: "5px 5px",
     height: 100,
+    
   },
   smImgsCnt: {
     "& > :first-child": {
-      padding: "0px 5px 0px 0px",
+      // padding: "0px 5px 0px 0px",
     },
     "& > :last-child": {
-      padding: "0px 0px 0px 5px",
+      // padding: "0px 0px 0px 5px",
     },
   },
   editCnt: {
@@ -87,6 +91,7 @@ const Reviews = (props) => {
   const [editModal, setEditModal] = useState(false);
   const [conModal, setconmodal] = useState(false);
   const [deleted, setDeleted] = useState(false);
+  const [indexImg, setIndexImg] = useState(0);
   const { projects = [], getProjects, deleteProject } = context;
   let { id } = props;
   useEffect(() => {
@@ -95,6 +100,7 @@ const Reviews = (props) => {
   const project = projects.find((item) => {
     return item.id == id;
   });
+
   const delProject = (id) => {
     userServices
       .deleteProject(id)
@@ -105,6 +111,7 @@ const Reviews = (props) => {
       })
       .catch((err) => {});
   };
+  const { job_images } = project || { job_images: [] };
   return (
     <Profile>
       <EditProjectModal
@@ -128,9 +135,9 @@ const Reviews = (props) => {
             <NavLink
               to="/profile/projects"
               className={classes.link}
-              style={{fontSize:38,color:"#F5961F"}}
+              style={{ fontSize: 38, color: "#F5961F" }}
             >
-              <KeyboardBackspaceIcon fontSize="inherit" color="inherit"/>
+              <KeyboardBackspaceIcon fontSize="inherit" color="inherit" />
             </NavLink>
           </div>
           <Grid container justify="center">
@@ -142,7 +149,12 @@ const Reviews = (props) => {
               xs={12}
               className={classes.imgCnt}
             >
-              <img src={clean_img} className={classes.img} />
+              <img
+                src={
+                  (job_images.length > 0 && IMAGES_URL + "/" + job_images[indexImg].img_url) || deafult_img
+                }
+                className={classes.img}
+              />
             </Grid>
             <Grid
               item
@@ -153,20 +165,25 @@ const Reviews = (props) => {
               className={classes.imgCnt}
             >
               <Grid container className={classes.smImgsCnt}>
-                {[1, 2, 3, 4].map((item) => {
-                  return (
-                    <Grid
-                      item
-                      lg={3}
-                      md={3}
-                      sm={4}
-                      xs={6}
-                      className={classes.smImgCnt}
-                    >
-                      <img src={clean_img} className={classes.img} />
-                    </Grid>
-                  );
-                })}
+                {project.job_images &&
+                  project.job_images.map((item,index) => {
+                    return (
+                      <Grid
+                        item
+                        lg={3}
+                        md={3}
+                        sm={4}
+                        xs={6}
+                        className={classes.smImgCnt}
+                      >
+                        <img
+                          src={IMAGES_URL + "/" + item.img_url}
+                          className={classes.img}
+                          onClick={()=>setIndexImg(index)}
+                        />
+                      </Grid>
+                    );
+                  })}
               </Grid>
             </Grid>
             <Grid

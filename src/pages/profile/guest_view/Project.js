@@ -29,7 +29,7 @@ const useStyles = makeStyles((theme) => ({
   smImgCnt: {
     padding: "0px 5px",
     height: 100,
-    cursor:"pointer"
+    cursor: "pointer",
   },
   smImgsCnt: {
     "& > :first-child": {
@@ -78,15 +78,15 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const Project = (props) => {
-  const images=[
-    {id:1,img:clean_img},
-    {id:2,img:avatar_img},
-    {id:3,img:clean_img},
-    {id:4,img:avatar_img},
-  ]
+  const images = [
+    { id: 1, img: clean_img },
+    { id: 2, img: avatar_img },
+    { id: 3, img: clean_img },
+    { id: 4, img: avatar_img },
+  ];
   const classes = useStyles(props);
   const context = useContext(AppContext);
-  const [activeImage, setActiveImage] = useState(images[0]||null);
+  const [activeImage, setActiveImage] = useState(images[0] || null);
   const [project, setProject] = useState({
     id: 1,
     title: "test",
@@ -95,11 +95,11 @@ const Project = (props) => {
   const { projects = [], getProjects, deleteProject } = context;
   let { u_id, p_id } = props;
 
-  const _activeImage=images.find(item=>{
-    item.id==activeImage
-  })
+  const _activeImage = images.find((item) => {
+    item.id == activeImage;
+  });
   return (
-    <Profile>
+    <Profile u_id={u_id} p_id={p_id}>
       {(project && (
         <div className={classes.root}>
           <div style={{ position: "absolute", top: 10, left: 10 }}>
@@ -141,9 +141,13 @@ const Project = (props) => {
                       xs={6}
                       className={classes.smImgCnt}
                     >
-                      <img src={item.img} className={classes.img} onClick={()=>{
-                        setActiveImage(item)
-                      }}/>
+                      <img
+                        src={item.img}
+                        className={classes.img}
+                        onClick={() => {
+                          setActiveImage(item);
+                        }}
+                      />
                     </Grid>
                   );
                 })}

@@ -11,7 +11,7 @@ const userServices = {
   addNewProject,
   deleteProject,
   acceptRequest,
-  declineRequest
+  declineRequest,
 };
 const callApi = (url, options) => {
   console.log(`Calling API ${url} with options`, options);
@@ -82,7 +82,10 @@ function getRequests() {
     method: "GET",
     headers: auth_header(),
   };
-  return callApi("/user/requestJobs/7b8ff50a-a58a-4b7e-98a4-f2a847d3e9ad", requestOptions);
+  return callApi(
+    "/user/requestJobs/7b8ff50a-a58a-4b7e-98a4-f2a847d3e9ad",
+    requestOptions
+  );
 }
 function getReviews() {
   const requestOptions = {
@@ -105,29 +108,29 @@ function addNewProject(data) {
   return callApi("/user/addNewProject", requestOptions);
 }
 
-function deleteProject(id){
+function deleteProject(id) {
   let user = JSON.parse(localStorage.getItem("sp_user"));
   const requestOptions = {
     method: "DELETE",
     headers: { Authorization: "Bearer " + user.token },
   };
-  return callApi("/user/post/"+id, requestOptions)
+  return callApi("/user/post/" + id, requestOptions);
 }
 
-function acceptRequest(id){
+function acceptRequest(id) {
   let user = JSON.parse(localStorage.getItem("sp_user"));
   const requestOptions = {
     method: "PATCH",
     headers: { Authorization: "Bearer " + user.token },
   };
-  return callApi("/user/acceptJob/"+id, requestOptions)
+  return callApi("/user/acceptJob/" + id, requestOptions);
 }
-function declineRequest(id){
+function declineRequest(id) {
   let user = JSON.parse(localStorage.getItem("sp_user"));
   const requestOptions = {
     method: "PATCH",
     headers: { Authorization: "Bearer " + user.token },
   };
-  return callApi("/user/declineJob/"+id, requestOptions)
+  return callApi("/user/declineJob/" + id, requestOptions);
 }
 export default userServices;

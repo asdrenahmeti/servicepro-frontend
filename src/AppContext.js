@@ -39,7 +39,7 @@ class Page extends React.Component {
       requests: [],
       reviews: [],
       apiErrors: [],
-      isLoading:false
+      isLoading: false,
     };
   }
   componentDidMount() {
@@ -68,13 +68,17 @@ class Page extends React.Component {
     this.setState({ user: user });
   };
 
+  
   getProjects = () => {
     userServices
       .getProjects()
       .then((res) => {
+        console.log("projects..:", res);
         this.setState({ projects: res.data });
       })
-      .catch((err) => {});
+      .catch((err) => {
+        console.log("err..:", err);
+      });
   };
   addProject = (project) => {
     let { projects } = this.state;
@@ -130,15 +134,15 @@ class Page extends React.Component {
       this.setState({ requests: _requests });
     });
   };
-  changeLoading=(val)=>{
-    this.setState({isLoading:!!val})
-  }
+  changeLoading = (val) => {
+    this.setState({ isLoading: !!val });
+  };
   deleteRequest = (id) => {
     const { requests } = this.state;
   };
   render() {
     let { children } = this.props;
-    let { language, user, projects, requests, reviews,isLoading } = this.state;
+    let { language, user, projects, requests, reviews, isLoading } = this.state;
     return (
       <AppContext.Provider
         value={{
@@ -178,9 +182,9 @@ class Page extends React.Component {
           addProject: (data) => {
             this.addProject(data);
           },
-          changeLoading:(val)=>{
-            this.changeLoading(val)
-          }
+          changeLoading: (val) => {
+            this.changeLoading(val);
+          },
         }}
       >
         {children}

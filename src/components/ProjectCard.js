@@ -8,24 +8,27 @@ import Button from "components/Button";
 import RoomIcon from "@material-ui/icons/Room";
 import DeleteIcon from "@material-ui/icons/Delete";
 import ConfirmModal from "components/modals/confirmModal";
-import classnames from "classnames"
+import classnames from "classnames";
+import { IMAGES_URL } from "Constants";
 const useStyles = makeStyles((theme) => ({
   root: {
     margin: "12px 4px",
     display: "flex",
     backgroundColor: "#FFF",
   },
-  is_new:{
-    border:"solid green 1px"
+  is_new: {
+    border: "solid green 1px",
   },
   imgCnt: {
     width: "50%",
-    minHeight: 200,
+    height: 228,
   },
   fImg: {
     width: "50%",
-    height: "100%",
+    height: 226,
     objectFit: "cover",
+    border: "solid white 1px",
+    // maxHeight: 200,
   },
   content: {
     margin: 12,
@@ -77,17 +80,93 @@ const useStyles = makeStyles((theme) => ({
     backgroundColor: "#FFF",
   },
 }));
+const renderImages = (job_images = []) => {
+  const classes = useStyles();
+  const imagesLength = job_images.length;
+  switch (imagesLength) {
+    case 1:
+      return (
+        <div className={classes.imgCnt} >
+          {job_images.map((item) => {
+            return (
+              <img
+                src={IMAGES_URL + "/" + item.img_url}
+                className={classes.fImg}
+                style={{ width: "100%" }}
+              />
+            );
+          })}
+        </div>
+      );
+      break;
+    case 2:
+      return (
+        <div className={classes.imgCnt}>
+          {job_images.map((item) => {
+            return (
+              <img
+                src={IMAGES_URL + "/" + item.img_url}
+                className={classes.fImg}
+                style={{ width: "50%" }}
+              />
+            );
+          })}
+        </div>
+      );
+  }
+  return (
+    <React.Fragment>
+      <div className={classes.imgCnt} style={{ display: "flex" }}>
+        <img
+          src={IMAGES_URL + "/" + job_images[0].img_url}
+          className={classes.fImg}
+          style={{ width: "50%" }}
+        />
+        <div style={{ width: "50%", height: "100%", position: "relative" }}>
+          <img
+            src={IMAGES_URL + "/" + job_images[1].img_url}
+            className={classes.fImg}
+            style={{ width: "100%", height: 112 }}
+          />
+          <img
+            src={IMAGES_URL + "/" + job_images[2].img_url}
+            className={classes.fImg}
+            style={{ width: "100%", height: 112 }}
+          />
+          <div
+            style={{
+              width: "100%",
+              height: 112,
+              position: "absolute",
+              right: 1,
+              bottom: 1,
+              background: "rgba(255, 255, 0,0.3)",
+              border: "solid white 1px",
+              display:"flex",
+              alignItems:"center",
+              justifyContent:"center",
+              fontSize:22,
+              color:"white",
+              fontFamily:"inter"
+            }}
+          >
+            <span>See more</span>
+          </div>
+        </div>
+      </div>
+    </React.Fragment>
+  );
+};
 const ProjectCard = (props) => {
   const classes = useStyles(props);
   const context = useContext(AppContext);
   const [delModal, setDelModal] = useState(false);
   const { mode, openEditProject, data, deleteProject } = props;
+  const { job_images } = data || { job_images: [] };
+
   return (
-    <div className={classnames(classes.root,data.is_new && classes.is_new)}>
-      <div className={classes.imgCnt}>
-        <img src={clean_img} className={classes.fImg} />
-        <img src={clean_img} className={classes.fImg} />
-      </div>
+    <div className={classnames(classes.root, data.is_new && classes.is_new)}>
+      {renderImages(job_images)}
       <div className={classes.content}>
         <div className={classes.contentHeader}>
           <div className={classes.userData}>
@@ -97,23 +176,6 @@ const ProjectCard = (props) => {
               <p>company@gmail.com</p>
             </div>
           </div>
-          {/* <div>
-            {(mode == "guest" && (
-              <Button variant="normal" size="sm">
-                Contact
-              </Button>
-            )) || (
-              <Button
-                variant="normal"
-                size="sm"
-                onClick={() => {
-                  openEditProject(data.id);
-                }}
-              >
-                Edit
-              </Button>
-            )}
-          </div> */}
         </div>
         <div>
           <h2 className={classes.serviceType}>{data.title}</h2>

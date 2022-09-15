@@ -17,6 +17,7 @@ import publicServices from "services/publicServices";
 import { useContext } from "react";
 import { AppContext } from "AppContext";
 import Loader from "components/Loader";
+import Select from "components/Select";
 const useStyles = makeStyles((theme) => ({
   root: {
     width: "100%",
@@ -81,6 +82,7 @@ const useStyles = makeStyles((theme) => ({
     padding: "30px 0px",
     display: "flex",
     alignItems: "center",
+    flexWrap: "wrap",
   },
   howItWorksItem: {
     display: "flex",
@@ -155,27 +157,31 @@ const Home = (props) => {
     changeLoading,
   } = context;
   useEffect(() => {
-    changeLoading(true)
-    publicServices.getServices().then((res) => {
-      const s = res.data.map((item, index) => {
-        item.cmps = [
-          { id: 1, title: "company4", name: "04444444" },
-          { id: 2, title: "company5", name: "04444443" },
-          { id: 3, title: "company7", name: "04444442" },
-        ];
-        if (index == 0) {
-          item.isActive = true;
-        } else {
-          item.isActive = false;
+    changeLoading(true);
+    publicServices
+      .topServices()
+      .then((res) => {
+        const s = res.data.map((item, index) => {
+          item.cmps = item.users.map((u) => {
+            return u;
+          });
+          if (index == 0) {
+            item.isActive = true;
+          } else {
+            item.isActive = false;
+          }
+          return item;
+        });
+        if (s.length > 0) {
+          setservices(s);
+          setactiveService(s[0]);
         }
-        return item;
+        changeLoading(false);
+      })
+      .catch((err) => {
+        setservices([]);
+        changeLoading(false);
       });
-      if (s.length > 0) {
-        setservices(s);
-        setactiveService(s[0]);
-      }
-      changeLoading(false)
-    });
   }, []);
   const setActieService = (id) => {
     let activeitem = null;
@@ -207,7 +213,28 @@ const Home = (props) => {
           <br /> {home.p1.txt3}
         </h1>
         <div className={classes.searchPart}>
-          <Input
+          <div style={{ minWidth: 300 }}>
+            <Select
+              placeholder={home.p1.plc1}
+              isMulti={true}
+              type="home"
+              onSelectChange={(e) => {
+                setInCategory(
+                  e.map((v) => {
+                    return v.value;
+                  })
+                );
+              }}
+              options={[
+                { value: "1", label: "Carpentry" },
+                { value: "2", label: "Gardering" },
+                { value: "3", label: "Electronics" },
+                { value: "4", label: "Computer services" },
+              ]}
+            />
+          </div>
+
+          {/* <Input
             styleType="leftRounded"
             placeholder={home.p1.plc1}
             type="text"
@@ -217,9 +244,30 @@ const Home = (props) => {
             }}
           >
             <BuildIcon />
-          </Input>
+          </Input> */}
           <div style={{ width: 20 }}></div>
-          <Input
+          <div style={{ minWidth: 300 }}>
+            <Select
+              placeholder={home.p1.plc2}
+              isMulti={true}
+              type="home"
+              onSelectChange={(e) => {
+                setInLocation(
+                  e.map((v) => {
+                    return v.value;
+                  })
+                );
+              }}
+              options={[
+                { value: "1", label: "Carpentry" },
+                { value: "2", label: "Gardering" },
+                { value: "3", label: "Electronics" },
+                { value: "4", label: "Computer services" },
+              ]}
+            />
+          </div>
+
+          {/* <Input
             styleType="leftRounded"
             placeholder={home.p1.plc2}
             type="text"
@@ -230,7 +278,7 @@ const Home = (props) => {
             classes={{ root: classes.rootInput }}
           >
             <LocationOnIcon />
-          </Input>
+          </Input> */}
           <div>
             <NavLink
               to={"/search?" + "cat=" + inCategory + "&" + "loc=" + inLocation}
@@ -289,7 +337,7 @@ const Home = (props) => {
                       return (
                         <Grid
                           item
-                          key={item.id}
+                          key={item.user_service.id}
                           lg={4}
                           md={4}
                           sm={11}
@@ -297,10 +345,11 @@ const Home = (props) => {
                           className={classes.featuredItem}
                         >
                           <VerticalCard
-                            id={item.id}
+                            id={item.user_service.userId}
                             img={clean_img}
-                            title={item.title}
-                            name={item.name}
+                            title={item.name}
+                            name={item.phone}
+                            location={item.city}
                           />
                         </Grid>
                       );

@@ -33,6 +33,8 @@ const styles = {
     textAlign: "center",
     fontWeight: "bold",
     margin: 0,
+    fontSize:16,
+    fontFamily:"inter"
   },
 };
 

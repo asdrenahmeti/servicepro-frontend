@@ -11,6 +11,7 @@ import avatar from "assets/avatar.png";
 import userServices from "services/userServices";
 import classnames from "classnames";
 import MenuIcon from "@material-ui/icons/Menu";
+import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -75,6 +76,7 @@ const Nav = (props) => {
   const context = useContext(AppContext);
   const [avatarMenu, setAvatarMenu] = useState(false);
   const [mobileMenu, setMobileMenu] = useState(false);
+  const [langMenu, setLangMenu] = useState(false);
   const openAvatarMenu = (event) => {
     setAvatarMenu(event.currentTarget);
   };
@@ -88,7 +90,12 @@ const Nav = (props) => {
   const closeMobileMenu = () => {
     setMobileMenu(null);
   };
-
+  const openLangMenu = (event) => {
+    setLangMenu(event.currentTarget);
+  };
+  const closeLangMenu = () => {
+    setLangMenu(null);
+  };
   const logout = () => {
     userServices.logout();
     window.location.reload(true);
@@ -192,7 +199,23 @@ const Nav = (props) => {
           </MenuItem>
         )}
       </Menu>
-
+      <Menu
+        id="simple-menu"
+        anchorEl={langMenu}
+        keepMounted
+        open={Boolean(langMenu)}
+        onClose={closeLangMenu}
+      >
+        <MenuItem>
+          <span style={{ fontFamily: "inter",padding:"0px 10px", fontSize: 18 }}>EN</span>
+        </MenuItem>
+        <MenuItem>
+          <span style={{ fontFamily: "inter",padding:"0px 10px", fontSize: 18 }}>SQ</span>
+        </MenuItem>
+        <MenuItem>
+          <span style={{ fontFamily: "inter",padding:"0px 10px", fontSize: 18 }}>MK</span>
+        </MenuItem>
+      </Menu>
       <Menu
         id="simple-menu"
         anchorEl={avatarMenu}
@@ -223,6 +246,7 @@ const Nav = (props) => {
           </span>
         </MenuItem>
       </Menu>
+
       <NavLink to="/" style={{ height: "100%" }}>
         <img src={logo} className={classes.logo} />
       </NavLink>
@@ -234,6 +258,7 @@ const Nav = (props) => {
         >
           {navBar.l1}
         </NavLink>
+
         <NavLink
           to="/howitworks"
           className={classes.navLinks}
@@ -267,11 +292,28 @@ const Nav = (props) => {
         </div>
       )) || (
         <div className={classes.showMobile}>
-          <img
-            src={avatar}
-            onClick={openAvatarMenu}
-            className={classes.avatar}
-          />
+          <div style={{ display: "flex", alignItems: "center" }}>
+            <img
+              src={avatar}
+              onClick={openAvatarMenu}
+              className={classes.avatar}
+            />
+            <p
+              style={{
+                marginLeft: 20,
+                fontFamily: "Open Sans",
+                fontSize: 22,
+                display: "flex",
+                alignItems: "center",
+                color: "#F5961F",
+                cursor: "pointer",
+              }}
+              onClick={openLangMenu}
+            >
+              <span style={{ color: "#000000" }}>MK</span>
+              <ExpandMoreIcon fontSize="inherit" color="inherit" />
+            </p>
+          </div>
         </div>
       )}
       <div className={classes.hamburger}>

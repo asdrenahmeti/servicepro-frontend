@@ -150,7 +150,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 const usrType = {
-  servicer: "SERVICER",
+  servicer: "COMPANY",
   client: "GUEST",
 };
 
@@ -214,11 +214,18 @@ const Signup = (props) => {
     userServices
       .register(data)
       .then((user_data) => {
-        console.log(user_data.token);
-        localStorage.setItem("sp_user", JSON.stringify(user_data.token));
+        let user = {
+          token: user_data.token,
+          email: user_data.user.email,
+          id: user_data.user.id,
+          username: user_data.user.username,
+          role: user_data.user.role,
+        };
+        localStorage.setItem("sp_user", JSON.stringify(user));
         const { history } = props;
         registerUser(user_data.user);
-        history.push("/profile");
+        if (user.role == "COMPANY") history.push("/profile");
+        else history.push("/");
       })
       .catch((err) => {
         console.log("error", err);
@@ -428,6 +435,7 @@ const Signup = (props) => {
                 xs={12}
                 className={classes.inputCnt}
               >
+                
                 <Select
                   placeholder={register.inputPlcs.services}
                   isMulti={true}

@@ -3,5 +3,6 @@ module.exports = {
   PROGRESS_MEDIUM:18,
   PROGRESS_SMALL:14,
   ROOT_URL:"http://localhost:3000/api",
-  SERVER_URL:"http://localhost:3000/"
+  SERVER_URL:"http://localhost:3000/",
+  IMAGES_URL:"http://localhost:3000/public/img/work"
 }

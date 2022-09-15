@@ -38,13 +38,18 @@ const Projects = (props) => {
   const context = useContext(AppContext);
   const { projects = [], getProjects, addProject } = context;
   const [addProjectModal, setaddProjectModal] = useState(false);
-
+  const [loadingModal,setLoadingModal]=useState(false)
+  const [errorModal,setErrorModal]=useState(null)
   const createNewProject = (data) => {
+    setLoadingModal(true)
     return userServices.addNewProject(data).then((newProject) => {
       newProject.data.is_new = true;
       newProject.data.job_images = newProject.images || [];
       addProject(newProject.data);
       setaddProjectModal(false);
+      setLoadingModal(false)
+    }).catch(err=>{
+      setErrorModal("Something went wrong, please reload page and try again!")
     });
   };
   useEffect(() => {
@@ -80,6 +85,8 @@ const Projects = (props) => {
         <NewProjectModal
           open={addProjectModal}
           createNewProject={createNewProject}
+          isLoading={loadingModal}
+          error={errorModal}
           handleClose={() => {
             setaddProjectModal(false);
           }}

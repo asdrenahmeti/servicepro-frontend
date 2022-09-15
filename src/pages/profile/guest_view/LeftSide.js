@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import Grid from "@material-ui/core/Grid";
 import { useContext } from "react";
@@ -9,6 +9,7 @@ import DoneAllIcon from "@material-ui/icons/DoneAll";
 import clean_img from "assets/cleanning_img.jpeg";
 import Button from "components/Button";
 import NewProjectModal from "components/modals/NewProjectModal";
+import publicServices from "services/publicServices";
 const useStyles = makeStyles((theme) => ({
   root: { marginRight: 50 },
   imgCnt: {
@@ -75,37 +76,51 @@ const useStyles = makeStyles((theme) => ({
 const LeftSide = (props) => {
   const classes = useStyles(props);
   const context = useContext(AppContext);
-  const {contactModal}=props
-
+  const [user, setUser] = useState({ services: [], jobs: [] });
+  const [rating, setRating] = useState({ reviews: 0, rating: 0 });
+  const { contactModal } = props;
+  useEffect(() => {
+    publicServices.getUser(props.u_id).then((user) => {
+      setUser(user.data.user ? user.data.user : false);
+      setRating(user.data.userRatings);
+    });
+  }, []);
   const {
     language: { login },
   } = context;
+  if (!user) {
+    return (
+      <React.Fragment></React.Fragment>
+    );
+  }
   return (
     <div className={classes.root}>
       <div className={classes.imgCnt}>
         <img src={clean_img} />
       </div>
       <h2 className={classes.user} style={{ textAlign: "center" }}>
-        Michael Winchester
+        {user.name}
       </h2>
-      <p className={classes.bio}>
-        If you’re in need of home cleaning, apartment cleaning, or a maid
-        service, we’re simply the best.
-      </p>
+      <p className={classes.bio}>{user.bio}</p>
       <h2 className={classes.user} style={{ color: "#3B3B3B" }}>
         Services
       </h2>
-      <li className={classes.categories}>home cleaning</li>
-      <li className={classes.categories}>home cleaning</li>
-      <li className={classes.categories}>home cleaning</li>
+      {user.services.map((item) => {
+        return <li className={classes.categories}>{item.name}</li>;
+      })}
       <div className={classes.stats}>
-        <div className={classes.rateNum}>4.8</div> <span>Highly rated</span>
+        <div className={classes.rateNum}>
+          {(rating.rating && rating.rating) || 0}
+        </div>{" "}
+        <span>Rating</span>
       </div>
       <div className={classes.stats}>
-        <DoneAllIcon fontSize="inherit" /> <span>8 projects done</span>
+        <DoneAllIcon fontSize="inherit" />{" "}
+        <span>{user.jobs.length} projects done</span>
       </div>
       <div className={classes.stats}>
-        <RateReviewIcon fontSize="inherit" /> <span>100 Reviews</span>
+        <RateReviewIcon fontSize="inherit" />{" "}
+        <span>{rating.reviews} Reviews</span>
       </div>
       <Button variant="normal" size="md" onClick={contactModal}>
         Contact me

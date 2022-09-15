@@ -11,11 +11,12 @@ import create_new_img from "assets/create_new.png";
 import CloseIcon from "@material-ui/icons/Close";
 import TextArea from "components/TextArea";
 import Select from "components/Select";
-
+import Loader from "components/Loader";
 const useStyles = makeStyles((theme) => ({
   root: {
     // margin: 20,
     minWidth: 600,
+    position:"relative"
   },
   header: {
     ...theme.typography.cardTitle("lg"),
@@ -71,7 +72,7 @@ const useStyles = makeStyles((theme) => ({
 const NewProjectModal = (props) => {
   const classes = useStyles(props);
   const context = useContext(AppContext);
-  const { open, handleClose } = props;
+  const { open, handleClose,isLoading,error=null } = props;
   const [title, setTitle] = useState("");
   const [desctiption, setDescription] = useState("");
   const [price, setPrice] = useState("");
@@ -132,11 +133,12 @@ const NewProjectModal = (props) => {
     hiddenFileInput.current.click();
   };
   return (
-    <RootModal maxWidth="md" open={open} handleClose={handleClose}>
+    <RootModal maxWidth="md" open={open} handleClose={handleClose} >
       <div className={classes.iconcnt} onClick={handleClose}>
         <CloseIcon fontSize="inherit" color="inherit" />
       </div>
       <Grid container className={classes.root}>
+      <Loader show={isLoading} isInside message={error && error || "Please wait!"}  style={{zIndex:20000}}/>
         <Grid item lg={12} md={12} >
           <h2 className={classes.header}>Share your projects with clients</h2>
         </Grid>

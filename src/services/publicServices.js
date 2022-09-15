@@ -2,6 +2,9 @@ import { ROOT_URL } from "Constants";
 import "whatwg-fetch";
 const publicServices = {
   getServices,
+  searchUsers,
+  getUser,
+  topServices
 };
 const callApi = (url, options) => {
   console.log(`Calling API ${url} with options`, options);
@@ -62,6 +65,30 @@ function findServices(id) {
     headers: { "Content-Type": "application/json" },
   };
   return callApi("/services/" + id, requestOptions);
+}
+
+function searchUsers(data) {
+  const requestOptions = {
+    method: "POST",
+    headers: { "Content-Type": "application/x-www-form-urlencoded" },
+    body: data,
+  };
+  return callApi("/services/users", requestOptions);
+}
+function getUser(id) {
+  const requestOptions = {
+    method: "GET",
+    headers: { "Content-Type": "application/json" },
+  };
+  return callApi("/user/" + id, requestOptions);
+}
+
+function topServices() {
+  const requestOptions = {
+    method: "GET",
+    headers: { "Content-Type": "application/json" },
+  };
+  return callApi("/services/top5", requestOptions);
 }
 
 export default publicServices;

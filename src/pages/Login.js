@@ -151,10 +151,12 @@ const Login = (props) => {
           email: user_data.user.email,
           id: user_data.user.id,
           username: user_data.user.username,
+          role: user_data.user.role,
         };
         localStorage.setItem("sp_user", JSON.stringify(user));
         const { history } = props;
-        history.push("/profile");
+        if (user.role == "COMPANY") history.push("/profile");
+        else history.push("/");
         registerUser(user_data.user);
       })
       .catch((err) => {

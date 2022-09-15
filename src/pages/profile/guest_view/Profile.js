@@ -24,10 +24,11 @@ const Profile = (props) => {
   const classes = useStyles(props);
   const context = useContext(AppContext);
   const [contactModal, setContactModal] = useState(false);
-  const { children } = props;
+  const { children,u_id } = props;
   return (
     <div className={classes.root}>
       <ContactServicerModal
+        u_id={u_id}
         open={contactModal}
         handleClose={() => {
           setContactModal(false);
@@ -36,6 +37,7 @@ const Profile = (props) => {
       <Grid container justify="center">
         <Grid item lg={3}>
           <LeftSide
+            u_id={u_id}
             contactModal={() => {
               setContactModal(true);
             }}

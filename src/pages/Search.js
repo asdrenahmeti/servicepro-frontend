@@ -1,5 +1,5 @@
 import Checkbox from "@material-ui/core/Checkbox";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import Grid from "@material-ui/core/Grid";
 import { useContext } from "react";
@@ -13,6 +13,7 @@ import FormControlLabel from "@material-ui/core/FormControlLabel";
 import classnames from "classnames";
 import clean_img from "assets/cleanning_img.jpeg";
 import { useLocation } from "react-router-dom";
+import publicServices from "services/publicServices";
 const useStyles = makeStyles((theme) => ({
   root: {
     width: "100%",
@@ -28,28 +29,28 @@ const useStyles = makeStyles((theme) => ({
   },
   title: {
     ...theme.typography.cardTitle("lg"),
-    margin:"20px 10px "
+    margin: "20px 10px ",
   },
   filterHeader: {
     "& h1": {
       ...theme.typography.cardTitle("lg"),
       margin: "0px 20px 0px 0px",
     },
-    margin:"20px 10px 10px 0px",
+    margin: "20px 10px 10px 0px",
     display: "flex",
-    // justifyContent: "space-around",
-    alignItems: "center",
+    justifyContent: "space-between",
+    // alignItems: "center",
     color: theme.colors.primary,
     fontSize: 30,
     cursor: "pointer",
+    backgroundColor:"#E5E5E5",
+    padding:'2px 10px'
   },
   cardCnt: {
     padding: 10,
   },
   categoryCnt: {
-    height: 300,
     overflowY: "auto",
-    border:"solid 2px "+theme.colors.primary,
     padding: 10,
   },
   sPart: {
@@ -83,11 +84,33 @@ const Search = (props) => {
   const classes = useStyles(props);
   const context = useContext(AppContext);
   const [expCategory, setExpCategory] = useState(true);
+  const [expCity, setExpCity] = useState(true);
+  const [users, setUsers] = useState([]);
+  const [services, setServices] = useState([]);
   let query = useQuery();
-  const category=query.get('cat')
-  const location=query.get('loc')
-  console.log("location,,,:",location)
-  console.log("category,,,:",category)
+  const category = query.get("cat");
+  const location = query.get("loc");
+  useEffect(() => {
+    let _location = location ? location.split(",") : [];
+    let _category = category ? category.split(",") : [];
+    let data = {
+      cities: _location,
+      services: _category,
+    };
+    publicServices
+      .searchUsers(JSON.stringify(data))
+      .then((res) => {
+        setUsers(res.data);
+      })
+      .catch((err) => {
+        console.log("error..:", err);
+      });
+    publicServices.getServices().then((items) => {
+      console.log("services..:", items.data);
+      setServices(items.data);
+    });
+  }, []);
+  console.log("services..:", users);
   return (
     <div className={classes.root}>
       <div className={classes.fPart}>
@@ -97,7 +120,7 @@ const Search = (props) => {
             setExpCategory(!expCategory);
           }}
         >
-          <h1 >Category</h1>
+          <h1>Category</h1>
           {(expCategory && <ExpandMoreIcon fontSize="inherit" />) || (
             <ExpandLessIcon fontSize="inherit" />
           )}
@@ -107,14 +130,24 @@ const Search = (props) => {
           className={classes.categoryCnt}
           style={{ display: !expCategory && "none" }}
         >
-          {[1, 2, 3, 4, 5, 6, 7, 8, 9, 3, 3, 3, 3, 3, 3].map((item) => {
+          {services.map((item) => {
             return (
               <div>
                 <FormControlLabel
                   classes={{ label: classes.formLabelRoot }}
                   control={
                     <Checkbox
-                      checked={item % 3 == 0}
+                      onClick={() => {
+                        setServices(
+                          services.map((i) => {
+                            if (i.id == item.id) {
+                              i.status = !i.status;
+                            }
+                            return i;
+                          })
+                        );
+                      }}
+                      checked={item.status}
                       icon={<span className={classes.icon}></span>}
                       checkedIcon={
                         <span
@@ -126,7 +159,7 @@ const Search = (props) => {
                       }
                     />
                   }
-                  label="Primary"
+                  label={item.name}
                 />
               </div>
             );
@@ -135,20 +168,20 @@ const Search = (props) => {
         <div
           className={classes.filterHeader}
           onClick={() => {
-            setExpCategory(!expCategory);
+            setExpCity(!expCity);
           }}
         >
-          <h1 >City</h1>
-          {(expCategory && <ExpandMoreIcon fontSize="inherit" />) || (
+          <h1>City</h1>
+          {(expCity && <ExpandMoreIcon fontSize="inherit" />) || (
             <ExpandLessIcon fontSize="inherit" />
           )}
         </div>
 
         <div
           className={classes.categoryCnt}
-          style={{ display: !expCategory && "none" }}
+          style={{ display: !expCity && "none" }}
         >
-          {[1, 2, 3, 4, 5, 6, 7, 8, 9, 3, 3, 3, 3, 3, 3].map((item) => {
+          {users.map((item) => {
             return (
               <div>
                 <FormControlLabel
@@ -179,10 +212,17 @@ const Search = (props) => {
           <Grid item lg={12}>
             <h1 className={classes.title}>Servicers</h1>
           </Grid>
-          {[1, 2, 3, 4, 5, 6, 7, 8, 9].map((item) => {
+          {users.map((item) => {
             return (
               <Grid key={item} item lg={3} className={classes.cardCnt}>
-                <VerticalCard  img={clean_img}/>
+                <VerticalCard
+                  title={item.user.name}
+                  name={item.user.phone}
+                  location={item.user.city}
+                  reviews={14}
+                  img={clean_img}
+                  id={item.user.id}
+                />
               </Grid>
             );
           })}

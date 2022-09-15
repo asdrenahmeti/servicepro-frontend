@@ -7,12 +7,13 @@ import { NavLink } from "react-router-dom";
 import classnames from "classnames";
 import ProjectCard from "pages/profile/guest_view/ProjectCard";
 import Profile from "pages/profile/guest_view/Profile";
-import userServices from "services/userServices";
+import publicServices from "services/publicServices";
 import ContactServicerModal from "components/modals/ContactServicerModal";
-
+import Loader from "components/Loader";
 const useStyles = makeStyles((theme) => ({
   root: {
     margin: "18px 0px",
+    position: "realtive",
   },
   title: {
     ...theme.typography.cardTitle("lg"),
@@ -37,18 +38,36 @@ const Projects = (props) => {
   const classes = useStyles(props);
   const context = useContext(AppContext);
   const [contactModal, setContactModal] = useState(false);
-  const [projects, setProjects] = useState([
-    { id: 1, title: "test", description: "test test test" },
-    { id: 2, title: "test", description: "test test test" },
-  ]);
+  const [projects, setProjects] = useState([]);
+  const [loader, setLoader] = useState(true);
+  const [loaderMsg, setLoaderMsg] = useState(null);
   let { u_id } = props;
-  //   useEffect(() => {
-  //     getProjects();
-  //   }, []);
+  useEffect(() => {
+    publicServices
+      .getUser(u_id)
+      .then((user) => {
+        setProjects(user.data.user ? user.data.user.jobs : false);
+        setLoader(false);
+      })
+      .catch((err) => {
+        setLoaderMsg(
+          "Something went wrong! Please check your internet connection and reload the page!"
+        );
+      });
+  }, []);
+  if (!projects) {
+    return (
+      <h1 style={{ textAlign: "center",margin:"100px 0px" }} className={classes.title}>
+        This profile does not exists!
+      </h1>
+    );
+  }
   if (projects.length > 0) {
     return (
-      <Profile>
+      <Profile u_id={u_id}>
+        <Loader show={loader} message={loaderMsg} />
         <ContactServicerModal
+          u_id={u_id}
           open={contactModal}
           handleClose={() => {
             setContactModal(false);
@@ -88,7 +107,8 @@ const Projects = (props) => {
     );
   } else {
     return (
-      <Profile>
+      <Profile u_id={u_id}>
+        <Loader show={loader} message={loaderMsg} />
         <div className={classes.root}>
           <Grid container justify="space-between">
             <Grid item lg={6} md={6}>
